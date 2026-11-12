@@ -538,6 +538,13 @@
   .exp-dots i.done { background: #80deea; }
   .exp-dots i.now { background: #ffd600; box-shadow: 0 0 0.4em #ffd600; }
   #exp-panel.nofig .exp-figure { flex-basis: 4.5em; cursor: default; }
+  /* 직접 조작하는 시뮬레이션 (예: 달의 위상) */
+  .exp-sim { position: absolute; inset: 0; }
+  .exp-sim[hidden] { display: none; }
+  .exp-sim svg { width: 100%; height: 100%; display: block; }
+  .exp-sim .slot { cursor: pointer; }
+  .exp-sim .slot:hover circle:first-child { stroke: #ffd54f; }
+  #exp-panel.sim .exp-figure { cursor: default; }
   #exp-panel.complete { border-color: #66bb6a; }
   #exp-panel.complete .exp-title { color: #a5d6a7; }
   /* 그림을 누르면 크게 */
@@ -910,6 +917,7 @@
         <div class="exp-ph-desc"></div>
         <code class="exp-ph-file"></code>
       </div>
+      <div class="exp-sim" hidden></div>
     </div>
     <div class="exp-dots"></div>
   </div>
@@ -1670,6 +1678,8 @@ function normalizeExperiment(e) {
     title: e.title || "",
     activity: e.curriculum_activity || "",
     materials: Array.isArray(e.materials) ? e.materials.filter(Boolean) : [],
+    sim: e.sim || "",                       // 그림 대신 직접 조작하는 시뮬레이션 ("moon")
+    simFrom: Math.max(1, Number(e.sim_from) || 2), // 이 단계부터 시뮬레이션을 열어 줌 (그 전은 그림)
     steps: e.steps.filter(Boolean).map((s) => ({
       phase: s.phase || "",
       title: s.title || "",
@@ -1885,6 +1895,13 @@ function buildSystemInstruction(quest, { hintLevel = 0, expStep = 1 } = {}) {
       "- stage_unlock_ready를 true로 할 때는 dialogue에 새 질문을 하지 않는다. 학생이 알아낸 것을 1~2문장으로 칭찬하며 정리하고 끝낸다. false일 때는 질문 하나로 끝낸다.",
       "- 관찰 결과를 알려 줄 때도 그 결과를 보고 학생이 답할 질문 하나로 끝낸다. 학생이 대답해야 하면 expects_answer는 true, 칭찬·정리로 끝나면 false로 한다.",
     ];
+    if (exp.sim === "moon") {
+      lines.push(
+        `- 이 실험에는 학생이 화면에서 직접 달을 옮겨 보는 시뮬레이션이 있다(위에서 본 태양·지구·달 배치와 지구에서 본 달 모양). ${exp.simFrom}단계부터 쓸 수 있다.`,
+        "- 시뮬레이션을 쓰는 단계에서는 관찰 결과를 말로 먼저 알려 주지 않는다. '달을 태양 반대쪽으로 옮겨 보렴'처럼 시뮬레이션에서 해 볼 조작을 한 번에 하나씩 제안하고, 보이는 모양을 학생이 말하게 한다.",
+        "- 학생 답 앞에 [시뮬레이션 관찰]이 붙어 있으면 학생이 화면에서 실제로 본 결과다. 그 내용을 바탕으로 칭찬하거나 다음 조작을 제안한다. 학생 말이 화면 결과와 다르면 다시 보게 한다.",
+      );
+    }
     if (Array.isArray(exp.materials) && exp.materials.length) lines.push(`준비물: ${exp.materials.join(", ")}`);
     lines.push("단계:");
     exp.steps.forEach((s, i) => {
@@ -3139,7 +3156,68 @@ class ExperimentPanel {
     this.figKey = null;     // 지금 보여주는 그림(데이터의 image 값)
     this.candidates = [];   // 시도할 파일 경로들 (png → jpg → jpeg → webp → svg)
     this.el.img.addEventListener("error", () => this.tryNextCandidate());
-    this.el.figure.addEventListener("click", () => { if (!this.root.classList.contains("nofig")) this.root.classList.toggle("zoom"); });
+    this.el.figure.addEventListener("click", () => {
+      if (this.root.classList.contains("nofig") || this.root.classList.contains("sim")) return; // 시뮬레이션은 누르면 조작
+      this.root.classList.toggle("zoom");
+    });
+    this.el.sim = root.querySelector(".exp-sim");
+    this.simExp = null;   // 시뮬레이션 상태가 속한 실험 (다른 퀘스트로 가면 초기화)
+    this.simPos = -1;     // 달의 궤도 위치 0~7 (-1 = 아직 안 놓음)
+    this.simDirty = false; // 학생이 조작했는데 아직 AI에게 알리지 않음
+  }
+
+  // 지금 시뮬레이션이 열려 있는지
+  simActive() {
+    return !!(this.exp && this.exp.sim && !this.root.hidden && this.root.classList.contains("sim"));
+  }
+
+  // 학생이 시뮬레이션에서 본 것 (AI에게 함께 보냄). 새로 조작한 게 없으면 ""
+  takeSimObservation() {
+    if (!this.simActive() || !this.simDirty || this.simPos < 0) return "";
+    this.simDirty = false;
+    if (this.exp.sim === "moon") {
+      const k = this.simPos;
+      const where = k === 0 ? "태양 쪽(태양과 지구 사이)" : k === 4 ? "태양 반대쪽" : `태양 쪽에서 공전 방향으로 ${k * 45}° 돈 곳`;
+      return `달 위치: ${where} → 지구에서 본 모습: ${MOON_LOOKS[k]}`;
+    }
+    return "";
+  }
+
+  // 달의 위상 시뮬레이션: 왼쪽은 위에서 본 태양·지구·달, 오른쪽은 지구에서 본 달 (미니게임 그림을 같이 씀)
+  renderMoonSim(showNames) {
+    const sel = this.simPos;
+    const EX = 200, EY = 175, OR = 120;
+    const pos = (k) => [EX + OR * Math.cos(k * Math.PI / 4), EY - OR * Math.sin(k * Math.PI / 4)];
+    let g = `viewBox="0 0 640 340">`;
+    g += `<text x="16" y="26" fill="#b0bec5" font-size="15">궤도 위 동그라미를 눌러 달을 옮겨 보세요</text>`;
+    g += `<circle cx="420" cy="175" r="30" fill="#ffca28"/><text x="420" y="228" fill="#ffe082" font-size="15" text-anchor="middle">태양</text>`;
+    for (const y of [105, 175, 245]) g += `<line x1="384" y1="${y}" x2="350" y2="${y}" stroke="#ffe082" stroke-width="3"/><path d="M350 ${y - 6} L338 ${y} L350 ${y + 6}Z" fill="#ffe082"/>`;
+    g += `<circle cx="${EX}" cy="${EY}" r="${OR}" fill="none" stroke="#546e7a" stroke-dasharray="5 6"/>`;
+    g += `<circle cx="${EX}" cy="${EY}" r="24" fill="#1a237e"/><path d="M${EX} ${EY - 24} A24 24 0 0 1 ${EX} ${EY + 24}Z" fill="#4fc3f7"/>`;
+    g += `<text x="${EX}" y="${EY + 44}" fill="#b0bec5" font-size="14" text-anchor="middle">지구</text>`;
+    g += `<path d="M${EX + 85} ${EY - 85} A120 120 0 0 0 ${EX + 30} ${EY - 116}" fill="none" stroke="#90a4ae" stroke-width="2"/><path d="M${EX + 30} ${EY - 124} L${EX + 18} ${EY - 116} L${EX + 31} ${EY - 108}Z" fill="#90a4ae"/>`;
+    g += `<text x="${EX + 64}" y="${EY - 128}" fill="#90a4ae" font-size="13">공전 방향</text>`;
+    for (let k = 0; k < 8; k++) {
+      const [x, y] = pos(k);
+      g += `<g class="slot" data-k="${k}"><circle cx="${x}" cy="${y}" r="20" fill="${k === sel ? "#263238" : "rgba(255,255,255,0.05)"}" stroke="${k === sel ? "#ffd54f" : "#78909c"}" stroke-width="2" stroke-dasharray="${k === sel ? "0" : "4 4"}"/>`;
+      if (k === sel) g += `<circle cx="${x}" cy="${y}" r="15" fill="#455a64"/><path d="M${x} ${y - 15} A15 15 0 0 1 ${x} ${y + 15}Z" fill="#fff6c8"/>`;
+      if (showNames && MOON_SHORT[k]) {
+        // 맨 위 자리(상현)는 위쪽 안내 문구와 겹치지 않게 왼쪽에 씀
+        g += k === 2 ? `<text x="${x - 28}" y="${y + 5}" fill="#cfd8dc" font-size="13" text-anchor="end">${MOON_SHORT[k]}</text>`
+                     : `<text x="${x}" y="${y + (y > EY ? 38 : -28)}" fill="#cfd8dc" font-size="13" text-anchor="middle">${MOON_SHORT[k]}</text>`;
+      }
+      g += `</g>`;
+    }
+    g += `<rect x="480" y="40" width="148" height="270" rx="12" fill="#1a1f3d"/><text x="554" y="72" fill="#e0e0e0" font-size="15" text-anchor="middle">지구에서 본 달</text>`;
+    g += sel < 0 ? `<text x="554" y="185" fill="#78909c" font-size="40" text-anchor="middle">?</text>`
+                 : moonPhaseSVG(554, 170, 52, sel) + (showNames ? `<text x="554" y="262" fill="#ffe082" font-size="14" text-anchor="middle">${MOON_NAMES[sel]}</text>` : "");
+    this.el.sim.innerHTML = svgEl(g);
+    this.el.sim.querySelectorAll(".slot").forEach((s) => s.addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.simPos = Number(s.dataset.k);
+      this.simDirty = true;
+      this.renderMoonSim(showNames);
+    }));
   }
 
   // step: 1부터. complete: 퀘스트 해결 후
@@ -3183,6 +3261,19 @@ class ExperimentPanel {
       this.el.phFile.textContent = "";
     }
     this.root.classList.toggle("nofig", !fig); // 그림이 없으면 빈 칸을 작게
+
+    // 시뮬레이션: 정해진 단계부터 그림 대신 직접 조작 (위상 이름 등 정답 용어는 마지막 단계부터)
+    if (this.simExp !== exp) { this.simExp = exp; this.simPos = -1; this.simDirty = false; }
+    const simOn = !!exp.sim && (complete || cur >= exp.simFrom);
+    this.root.classList.toggle("sim", simOn);
+    this.el.sim.hidden = !simOn;
+    if (simOn) {
+      this.figKey = null; // 시뮬레이션을 닫으면 그림을 다시 찾게
+      this.el.img.hidden = true;
+      this.el.ph.hidden = true;
+      this.root.classList.remove("nofig", "zoom");
+      if (exp.sim === "moon") this.renderMoonSim(complete || cur >= n);
+    }
 
     this.el.dots.replaceChildren(...exp.steps.map((_, i) => {
       const d = document.createElement("i");
@@ -4107,6 +4198,10 @@ function peaSVG(x, y, round, r = 12) {
 const peaIcon = (round, size = 30) => `<svg width="${size}" height="${size}" viewBox="0 0 30 30">${peaSVG(15, 15, round)}</svg>`;
 
 const MOON_NAMES = ["삭(보이지 않음)", "초승달", "상현달", "보름달이 되어 가는 달", "보름달", "보름달이 지난 달", "하현달", "그믐달"];
+// 실험 패널의 달 시뮬레이션: 궤도 옆 짧은 이름(마지막 단계에서만), AI에게 알려 줄 '보이는 모습'
+const MOON_SHORT = ["삭", "", "상현", "", "망", "", "하현", ""];
+const MOON_LOOKS = ["밝은 부분이 거의 보이지 않음", "오른쪽이 가늘게 밝음", "오른쪽 반이 밝음", "오른쪽 대부분이 밝음",
+                    "둥근 전체가 밝음", "왼쪽 대부분이 밝음", "왼쪽 반이 밝음", "왼쪽이 가늘게 밝음"];
 const MOON_TARGETS = [
   { pos: [1], prompt: "지구에서 '초승달'이 보이도록 달을 옮겨라.", hint: "초승달은 오른쪽이 가늘게 빛나는 달이야." },
   { pos: [2], prompt: "지구에서 '상현달'이 보이도록 달을 옮겨라.", hint: "상현달은 오른쪽 반이 밝은 반달이야." },
@@ -6182,7 +6277,10 @@ class GameEngine {
 
     try {
       const persona = { systemInstruction: buildSystemInstruction(quest, { hintLevel, expStep: Math.max(1, session.expStep) }) };
-      const text = isHint ? `${CONFIG.HINT.PREFIX} ${reply.text}` : reply.text;
+      let text = isHint ? `${CONFIG.HINT.PREFIX} ${reply.text}` : reply.text;
+      // 시뮬레이션에서 새로 조작한 결과가 있으면 학생이 실제로 본 것을 함께 보냄
+      const seen = this.expPanel.takeSimObservation();
+      if (seen) text = `[시뮬레이션 관찰] ${seen}\n${text}`;
       const result = await this.ai.send(npc.id, persona, text, ctrl.signal);
       if (this.pendingRequest !== ctrl) return; // 그사이 대화창이 닫힘
       console.log("[AI] 응답:", result, isHint ? `(힌트 ${hintLevel})` : "");
@@ -6266,6 +6364,7 @@ class GameEngine {
     } catch (err) {
       if (this.pendingRequest !== ctrl) return;
       ui.setLoading(false);
+      if (this.expPanel.simActive() && this.expPanel.simPos >= 0) this.expPanel.simDirty = true; // 못 보낸 관찰은 다음에 다시
       const code = err && err.code ? ` [${err.code}]` : "";
       if (!err || err.code !== "cooldown") console.error("[AI] 오류:", err);
       if (err && err.code === "cooldown") {
