@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif">
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <text x="40" y="54" font-size="31" font-weight="700" fill="#0f172a">적외선등을 켠 뒤 시간에 따른 컵 속 온도</text>
+  <text x="40" y="90" font-size="21" fill="#475569">검게 칠한 알루미늄 컵을 적외선등으로 계속 비추며 온도 센서로 측정</text>
+
+  <!-- 축 -->
+  <line x1="140" y1="560" x2="1110" y2="560" stroke="#334155" stroke-width="3"/>
+  <line x1="140" y1="560" x2="140" y2="130" stroke="#334155" stroke-width="3"/>
+  <text x="1110" y="610" font-size="22" fill="#334155" text-anchor="end">시간 (분)</text>
+  <text x="70" y="150" font-size="22" fill="#334155" text-anchor="middle">온도</text>
+  <text x="70" y="176" font-size="22" fill="#334155" text-anchor="middle">(℃)</text>
+
+  <!-- 가로 눈금: 0~25분, 5분마다 (1분 = 36px) -->
+  <g font-size="21" fill="#475569" text-anchor="middle">
+    <line x1="140" y1="560" x2="140" y2="570" stroke="#334155" stroke-width="2"/><text x="140" y="594">0</text>
+    <line x1="320" y1="560" x2="320" y2="570" stroke="#334155" stroke-width="2"/><text x="320" y="594">5</text>
+    <line x1="500" y1="560" x2="500" y2="570" stroke="#334155" stroke-width="2"/><text x="500" y="594">10</text>
+    <line x1="680" y1="560" x2="680" y2="570" stroke="#334155" stroke-width="2"/><text x="680" y="594">15</text>
+    <line x1="860" y1="560" x2="860" y2="570" stroke="#334155" stroke-width="2"/><text x="860" y="594">20</text>
+    <line x1="1040" y1="560" x2="1040" y2="570" stroke="#334155" stroke-width="2"/><text x="1040" y="594">25</text>
+  </g>
+
+  <!-- 일정해지는 온도 (약 32 ℃) -->
+  <line x1="140" y1="220" x2="1100" y2="220" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 7"/>
+  <text x="150" y="208" font-size="22" font-weight="700" fill="#b91c1c">약 32 ℃</text>
+
+  <!-- 온도 곡선: 처음엔 빠르게, 점점 천천히 오르다가 약 15분 뒤 일정 -->
+  <path d="M 140 520 C 230 360, 330 270, 470 236 C 560 222, 620 220, 680 220 L 1100 220" fill="none" stroke="#dc2626" stroke-width="6" stroke-linecap="round"/>
+  <line x1="680" y1="220" x2="680" y2="560" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 6"/>
+
+  <!-- 구간 설명 -->
+  <text x="250" y="470" font-size="22" fill="#0f172a">처음에는 빠르게 오름</text>
+  <text x="470" y="300" font-size="22" fill="#0f172a">점점 천천히 오름</text>
+  <text x="790" y="270" font-size="22" fill="#0f172a">약 15분 뒤부터 더 오르지 않음</text>
+</svg>
