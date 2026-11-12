@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif">
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <text x="40" y="52" font-size="28" font-weight="700" fill="#0f172a">운동 전후의 맥박 수와 호흡 수 (1분 동안)</text>
+  <g stroke="#e2e8f0" stroke-width="1.5">
+    <line x1="160" y1="534" x2="1060" y2="534"/><line x1="160" y1="469" x2="1060" y2="469"/><line x1="160" y1="403" x2="1060" y2="403"/>
+    <line x1="160" y1="337" x2="1060" y2="337"/><line x1="160" y1="271" x2="1060" y2="271"/><line x1="160" y1="206" x2="1060" y2="206"/>
+    <line x1="160" y1="140" x2="1060" y2="140"/>
+  </g>
+  <line x1="160" y1="600" x2="1070" y2="600" stroke="#0f172a" stroke-width="3"/>
+  <line x1="160" y1="600" x2="160" y2="120" stroke="#0f172a" stroke-width="3"/>
+  <g font-size="20" fill="#334155" text-anchor="end">
+    <text x="148" y="607">0</text><text x="148" y="541">20</text><text x="148" y="476">40</text><text x="148" y="410">60</text>
+    <text x="148" y="344">80</text><text x="148" y="278">100</text><text x="148" y="213">120</text><text x="148" y="147">140</text>
+  </g>
+  <text x="40" y="100" font-size="21" fill="#0f172a">횟수 (회/분)</text>
+  <g font-size="22" fill="#0f172a" text-anchor="middle">
+    <text x="280" y="635">안정 시</text><text x="600" y="635">제자리 뛰기 1분 직후</text><text x="920" y="635">3분 휴식 후</text>
+  </g>
+  <polyline points="280,354 600,189 920,321" fill="none" stroke="#dc2626" stroke-width="5"/>
+  <g fill="#dc2626"><circle cx="280" cy="354" r="11"/><circle cx="600" cy="189" r="11"/><circle cx="920" cy="321" r="11"/></g>
+  <g font-size="22" font-weight="700" fill="#dc2626" text-anchor="middle">
+    <text x="280" y="336">75</text><text x="600" y="171">125</text><text x="920" y="303">85</text>
+  </g>
+  <polyline points="280,547 600,495 920,534" fill="none" stroke="#2563eb" stroke-width="5"/>
+  <g fill="#2563eb"><circle cx="280" cy="547" r="11"/><circle cx="600" cy="495" r="11"/><circle cx="920" cy="534" r="11"/></g>
+  <g font-size="22" font-weight="700" fill="#2563eb" text-anchor="middle">
+    <text x="280" y="580">16</text><text x="600" y="478">32</text><text x="920" y="567">20</text>
+  </g>
+  <rect x="880" y="80" width="260" height="90" rx="10" fill="#fff" stroke="#cbd5e1"/>
+  <line x1="900" y1="110" x2="950" y2="110" stroke="#dc2626" stroke-width="5"/><text x="965" y="118" font-size="21" fill="#0f172a">맥박 수</text>
+  <line x1="900" y1="148" x2="950" y2="148" stroke="#2563eb" stroke-width="5"/><text x="965" y="156" font-size="21" fill="#0f172a">호흡 수</text>
+</svg>

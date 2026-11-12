@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#64748b"/></marker>
+    <marker id="ray" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#f59e0b"/></marker>
+  </defs>
+  <rect width="1200" height="675" fill="#0f172a"/>
+  <text x="40" y="52" font-size="28" font-weight="700" fill="#f8fafc">달의 위치에 따른 모양 (위에서 내려다본 모습)</text>
+
+  <!-- 태양(전등)과 빛 -->
+  <circle cx="460" cy="105" r="30" fill="#fbbf24"/>
+  <text x="505" y="114" font-size="22" fill="#fde68a">태양(전등) 빛</text>
+  <g stroke="#f59e0b" stroke-width="3" stroke-dasharray="6 6" marker-end="url(#ray)">
+    <line x1="330" y1="150" x2="330" y2="200"/><line x1="460" y1="145" x2="460" y2="185"/><line x1="590" y1="150" x2="590" y2="200"/>
+  </g>
+
+  <!-- 공전 궤도 (시계 반대 방향) -->
+  <circle cx="460" cy="400" r="190" fill="none" stroke="#64748b" stroke-width="3" stroke-dasharray="10 8"/>
+  <path d="M 326 266 A 190 190 0 0 0 270 400" fill="none" stroke="#64748b" stroke-width="3" marker-end="url(#ar)"/>
+  <path d="M 594 534 A 190 190 0 0 0 650 400" fill="none" stroke="#64748b" stroke-width="3" marker-end="url(#ar)"/>
+  <text x="200" y="262" font-size="19" fill="#94a3b8" text-anchor="middle">↺ 시계 반대 방향</text>
+  <text x="200" y="286" font-size="19" fill="#94a3b8" text-anchor="middle">으로 공전</text>
+
+  <!-- 지구(관찰자) -->
+  <circle cx="460" cy="400" r="46" fill="#3b82f6"/>
+  <path d="M 414 400 A 46 46 0 0 1 506 400 Z" fill="#93c5fd"/>
+  <text x="460" y="472" font-size="20" fill="#cbd5e1" text-anchor="middle">지구(관찰자)</text>
+
+  <!-- 달: 네 위치 모두 태양 쪽(위쪽) 절반이 밝음 -->
+  <g>
+    <circle cx="460" cy="210" r="30" fill="#334155"/><path d="M 430 210 A 30 30 0 0 1 490 210 Z" fill="#f8fafc"/>
+    <text x="510" y="218" font-size="22" fill="#f8fafc">① 삭</text>
+    <circle cx="270" cy="400" r="30" fill="#334155"/><path d="M 240 400 A 30 30 0 0 1 300 400 Z" fill="#f8fafc"/>
+    <text x="220" y="452" font-size="22" fill="#f8fafc" text-anchor="middle">② 상현</text>
+    <circle cx="460" cy="590" r="30" fill="#334155"/><path d="M 430 590 A 30 30 0 0 1 490 590 Z" fill="#f8fafc"/>
+    <text x="510" y="598" font-size="22" fill="#f8fafc">③ 망</text>
+    <circle cx="650" cy="400" r="30" fill="#334155"/><path d="M 620 400 A 30 30 0 0 1 680 400 Z" fill="#f8fafc"/>
+    <text x="700" y="452" font-size="22" fill="#f8fafc" text-anchor="middle">④ 하현</text>
+  </g>
+
+  <!-- 지구에서 보이는 모양 -->
+  <rect x="800" y="90" width="360" height="545" rx="18" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+  <text x="980" y="135" font-size="24" font-weight="700" fill="#f8fafc" text-anchor="middle">지구에서 보이는 모양</text>
+  <g font-size="24" fill="#e2e8f0">
+    <circle cx="880" cy="200" r="34" fill="#334155" stroke="#64748b" stroke-width="2"/>
+    <text x="940" y="196">① 삭</text><text x="940" y="226" font-size="18" fill="#94a3b8">밝은 면이 안 보임</text>
+
+    <circle cx="880" cy="310" r="34" fill="#334155"/><path d="M 880 276 A 34 34 0 0 1 880 344 Z" fill="#f8fafc"/>
+    <text x="940" y="306">② 상현</text><text x="940" y="336" font-size="18" fill="#94a3b8">오른쪽 반이 밝음</text>
+
+    <circle cx="880" cy="420" r="34" fill="#f8fafc"/>
+    <text x="940" y="416">③ 망 (보름달)</text><text x="940" y="446" font-size="18" fill="#94a3b8">전체가 밝음</text>
+
+    <circle cx="880" cy="530" r="34" fill="#334155"/><path d="M 880 496 A 34 34 0 0 0 880 564 Z" fill="#f8fafc"/>
+    <text x="940" y="526">④ 하현</text><text x="940" y="556" font-size="18" fill="#94a3b8">왼쪽 반이 밝음</text>
+  </g>
+  <text x="40" y="650" font-size="18" fill="#94a3b8">달은 항상 태양 쪽 절반이 밝다. 지구에서 그 밝은 면이 얼마나 보이느냐에 따라 모양이 달라진다. (북반구 기준)</text>
+</svg>

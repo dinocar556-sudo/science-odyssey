@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif">
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <text x="40" y="52" font-size="28" font-weight="700" fill="#0f172a">전압·전류 측정 회로</text>
+  <g stroke="#0f172a" stroke-width="5" fill="none" stroke-linecap="round">
+    <!-- 왼쪽: 전원 장치 -->
+    <line x1="220" y1="230" x2="220" y2="355"/>
+    <line x1="220" y1="385" x2="220" y2="530"/>
+    <!-- 위쪽 도선 -->
+    <line x1="220" y1="230" x2="380" y2="230"/>
+    <line x1="460" y1="230" x2="560" y2="230"/>
+    <line x1="780" y1="230" x2="1000" y2="230"/>
+    <!-- 오른쪽 도선 (전류계 위아래) -->
+    <line x1="1000" y1="230" x2="1000" y2="345"/>
+    <line x1="1000" y1="415" x2="1000" y2="530"/>
+    <!-- 아래 도선 -->
+    <line x1="220" y1="530" x2="1000" y2="530"/>
+    <!-- 스위치 -->
+    <line x1="380" y1="230" x2="452" y2="196"/>
+    <!-- 니크롬선 (저항) -->
+    <polyline points="560,230 580,205 610,255 640,205 670,255 700,205 730,255 760,205 780,230"/>
+    <!-- 전압계 연결 (병렬) -->
+    <line x1="530" y1="230" x2="530" y2="110"/>
+    <line x1="530" y1="110" x2="628" y2="110"/>
+    <line x1="692" y1="110" x2="810" y2="110"/>
+    <line x1="810" y1="110" x2="810" y2="230"/>
+  </g>
+  <!-- 전원 장치 기호 -->
+  <line x1="170" y1="355" x2="270" y2="355" stroke="#0f172a" stroke-width="5"/>
+  <line x1="195" y1="385" x2="245" y2="385" stroke="#0f172a" stroke-width="10"/>
+  <text x="120" y="350" font-size="22" fill="#0f172a">+</text>
+  <text x="120" y="400" font-size="22" fill="#0f172a">−</text>
+  <text x="290" y="380" font-size="22" fill="#334155">전원 장치</text>
+  <!-- 스위치 점 -->
+  <circle cx="380" cy="230" r="7" fill="#0f172a"/><circle cx="460" cy="230" r="7" fill="#0f172a"/>
+  <text x="420" y="285" font-size="22" fill="#334155" text-anchor="middle">스위치</text>
+  <!-- 접점 -->
+  <circle cx="530" cy="230" r="8" fill="#0f172a"/><circle cx="810" cy="230" r="8" fill="#0f172a"/>
+  <text x="670" y="300" font-size="22" fill="#334155" text-anchor="middle">니크롬선 (저항)</text>
+  <!-- 전압계 -->
+  <circle cx="660" cy="110" r="32" fill="#fff" stroke="#7c3aed" stroke-width="5"/>
+  <text x="660" y="121" font-size="30" font-weight="700" fill="#7c3aed" text-anchor="middle">V</text>
+  <text x="850" y="100" font-size="22" font-weight="700" fill="#7c3aed">전압계: 니크롬선에 병렬 연결</text>
+  <!-- 전류계 -->
+  <circle cx="1000" cy="380" r="35" fill="#fff" stroke="#dc2626" stroke-width="5"/>
+  <text x="1000" y="391" font-size="30" font-weight="700" fill="#dc2626" text-anchor="middle">A</text>
+  <text x="1050" y="372" font-size="22" font-weight="700" fill="#dc2626">전류계:</text>
+  <text x="1050" y="400" font-size="22" font-weight="700" fill="#dc2626">직렬 연결</text>
+  <!-- 안내 -->
+  <rect x="220" y="575" width="780" height="70" rx="12" fill="#e2e8f0"/>
+  <text x="610" y="607" font-size="21" fill="#0f172a" text-anchor="middle">바꿀 조건: 전원 장치의 전압 · 같게 할 조건: 니크롬선(저항)</text>
+  <text x="610" y="634" font-size="19" fill="#475569" text-anchor="middle">전류계는 회로에 한 줄로(직렬), 전압계는 재려는 부분의 양 끝에(병렬) 연결한다</text>
+</svg>

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif">
+  <defs>
+    <radialGradient id="steel" cx="0.35" cy="0.35" r="0.7"><stop offset="0" stop-color="#f1f5f9"/><stop offset="0.5" stop-color="#94a3b8"/><stop offset="1" stop-color="#334155"/></radialGradient>
+    <radialGradient id="wood" cx="0.35" cy="0.35" r="0.7"><stop offset="0" stop-color="#fde68a"/><stop offset="0.55" stop-color="#b45309"/><stop offset="1" stop-color="#78350f"/></radialGradient>
+  </defs>
+  <rect width="1200" height="675" fill="#020617"/>
+  <text x="40" y="44" font-size="26" font-weight="700" fill="#f8fafc">자유 낙하 다중 섬광 사진 (0.1초 간격, 모식도)</text>
+
+  <!-- 눈금자: 0.5 m마다 -->
+  <line x1="300" y1="70" x2="300" y2="630" stroke="#64748b" stroke-width="3"/>
+  <g stroke="#64748b" stroke-width="3"><line x1="290" y1="70" x2="310" y2="70"/><line x1="290" y1="228" x2="310" y2="228"/><line x1="290" y1="387" x2="310" y2="387"/><line x1="290" y1="545" x2="310" y2="545"/></g>
+  <g font-size="18" fill="#94a3b8" text-anchor="end"><text x="282" y="76">0 m</text><text x="282" y="234">0.5 m</text><text x="282" y="393">1.0 m</text><text x="282" y="551">1.5 m</text></g>
+
+  <!-- 같은 순간을 잇는 선 (y = 70 + 317 × 4.9t²) -->
+  <g stroke="#475569" stroke-width="1.5" stroke-dasharray="4 5">
+    <line x1="330" y1="70" x2="700" y2="70"/><line x1="330" y1="86" x2="700" y2="86"/><line x1="330" y1="132" x2="700" y2="132"/>
+    <line x1="330" y1="210" x2="700" y2="210"/><line x1="330" y1="319" x2="700" y2="319"/><line x1="330" y1="458" x2="700" y2="458"/><line x1="330" y1="629" x2="700" y2="629"/>
+  </g>
+  <g font-size="16" fill="#64748b"><text x="708" y="75">0 s</text><text x="708" y="91">0.1 s</text><text x="708" y="137">0.2 s</text><text x="708" y="215">0.3 s</text><text x="708" y="324">0.4 s</text><text x="708" y="463">0.5 s</text><text x="708" y="634">0.6 s</text></g>
+
+  <!-- 무거운 쇠공 -->
+  <g opacity="0.9">
+    <circle cx="450" cy="70" r="20" fill="url(#steel)"/><circle cx="450" cy="86" r="20" fill="url(#steel)"/><circle cx="450" cy="132" r="20" fill="url(#steel)"/>
+    <circle cx="450" cy="210" r="20" fill="url(#steel)"/><circle cx="450" cy="319" r="20" fill="url(#steel)"/><circle cx="450" cy="458" r="20" fill="url(#steel)"/><circle cx="450" cy="629" r="20" fill="url(#steel)"/>
+  </g>
+  <!-- 가벼운 나무공 -->
+  <g opacity="0.9">
+    <circle cx="600" cy="70" r="14" fill="url(#wood)"/><circle cx="600" cy="86" r="14" fill="url(#wood)"/><circle cx="600" cy="132" r="14" fill="url(#wood)"/>
+    <circle cx="600" cy="210" r="14" fill="url(#wood)"/><circle cx="600" cy="319" r="14" fill="url(#wood)"/><circle cx="600" cy="458" r="14" fill="url(#wood)"/><circle cx="600" cy="629" r="14" fill="url(#wood)"/>
+  </g>
+  <text x="450" y="662" font-size="18" fill="#cbd5e1" text-anchor="middle">무거운 쇠공</text>
+  <text x="600" y="662" font-size="18" fill="#cbd5e1" text-anchor="middle">가벼운 나무공</text>
+
+  <!-- 설명 -->
+  <rect x="790" y="110" width="370" height="430" rx="16" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+  <text x="815" y="160" font-size="22" font-weight="700" fill="#fbbf24">① 간격이 점점 넓어진다</text>
+  <text x="815" y="192" font-size="19" fill="#e2e8f0">같은 0.1초 동안 이동한 거리가</text>
+  <text x="815" y="218" font-size="19" fill="#e2e8f0">점점 늘어난다</text>
+  <text x="815" y="244" font-size="19" fill="#e2e8f0">→ 속력이 일정하게 빨라진다</text>
+  <text x="815" y="270" font-size="19" fill="#e2e8f0">(1초마다 약 9.8 m/s씩)</text>
+  <text x="815" y="340" font-size="22" font-weight="700" fill="#38bdf8">② 두 공이 매 순간</text>
+  <text x="815" y="370" font-size="22" font-weight="700" fill="#38bdf8">같은 높이에 있다</text>
+  <text x="815" y="402" font-size="19" fill="#e2e8f0">질량이 달라도</text>
+  <text x="815" y="428" font-size="19" fill="#e2e8f0">똑같이 떨어진다</text>
+  <text x="815" y="500" font-size="17" fill="#94a3b8">공기 저항은 무시</text>
+</svg>

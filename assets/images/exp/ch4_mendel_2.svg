@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif">
+  <defs>
+    <g id="round"><circle r="26" fill="#65a30d"/><circle cx="-8" cy="-9" r="7" fill="#bef264"/></g>
+    <g id="wrinkle"><path d="M0,-26 L7,-20 L15,-21 L18,-13 L25,-8 L22,0 L26,8 L18,13 L16,21 L7,20 L0,26 L-7,20 L-16,21 L-18,13 L-26,8 L-22,0 L-25,-8 L-18,-13 L-15,-21 L-7,-20 Z" fill="#65a30d"/><path d="M-10,-6 Q0,2 10,-6 M-12,6 Q0,14 12,6" stroke="#3f6212" stroke-width="2.5" fill="none"/></g>
+  </defs>
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <text x="40" y="52" font-size="28" font-weight="700" fill="#0f172a">한 쌍의 대립 형질 모의 실험 결과 (100번)</text>
+
+  <!-- 생식세포 짝짓기 표 -->
+  <text x="200" y="110" font-size="22" font-weight="700" fill="#334155" text-anchor="middle">잡종 1대(Rr) × 잡종 1대(Rr)</text>
+  <g font-size="26" text-anchor="middle" font-weight="700">
+    <rect x="80" y="130" width="80" height="80" fill="#e2e8f0"/>
+    <rect x="160" y="130" width="120" height="80" fill="#1e3a8a"/><text x="220" y="182" fill="#fff">R</text>
+    <rect x="280" y="130" width="120" height="80" fill="#1e3a8a"/><text x="340" y="182" fill="#fff">r</text>
+    <rect x="80" y="210" width="80" height="100" fill="#1e3a8a"/><text x="120" y="270" fill="#fff">R</text>
+    <rect x="80" y="310" width="80" height="100" fill="#1e3a8a"/><text x="120" y="370" fill="#fff">r</text>
+    <rect x="160" y="210" width="120" height="100" fill="#fff" stroke="#cbd5e1"/><text x="220" y="270" fill="#0f172a">RR</text>
+    <rect x="280" y="210" width="120" height="100" fill="#fff" stroke="#cbd5e1"/><text x="340" y="270" fill="#0f172a">Rr</text>
+    <rect x="160" y="310" width="120" height="100" fill="#fff" stroke="#cbd5e1"/><text x="220" y="370" fill="#0f172a">Rr</text>
+    <rect x="280" y="310" width="120" height="100" fill="#fff" stroke="#cbd5e1"/><text x="340" y="370" fill="#0f172a">rr</text>
+  </g>
+  <text x="240" y="450" font-size="20" fill="#475569" text-anchor="middle">예상 비: RR : Rr : rr = 1 : 2 : 1</text>
+
+  <!-- 실제 결과 표 -->
+  <g font-size="22" text-anchor="middle">
+    <rect x="80" y="485" width="320" height="46" fill="#334155"/><text x="240" y="516" fill="#fff" font-weight="700">100번 뽑은 결과</text>
+    <rect x="80" y="531" width="320" height="42" fill="#fff" stroke="#cbd5e1"/><text x="160" y="560" fill="#0f172a">RR</text><text x="320" y="560" fill="#0f172a">26번</text>
+    <rect x="80" y="573" width="320" height="42" fill="#f1f5f9" stroke="#cbd5e1"/><text x="160" y="602" fill="#0f172a">Rr</text><text x="320" y="602" fill="#0f172a">49번</text>
+    <rect x="80" y="615" width="320" height="42" fill="#fff" stroke="#cbd5e1"/><text x="160" y="644" fill="#0f172a">rr</text><text x="320" y="644" fill="#0f172a">25번</text>
+  </g>
+
+  <!-- 막대그래프 -->
+  <line x1="560" y1="540" x2="1130" y2="540" stroke="#0f172a" stroke-width="3"/>
+  <rect x="650" y="240" width="160" height="300" fill="#65a30d"/>
+  <rect x="900" y="440" width="160" height="100" fill="#a3a3a3"/>
+  <text x="730" y="225" font-size="28" font-weight="700" fill="#3f6212" text-anchor="middle">75</text>
+  <text x="980" y="425" font-size="28" font-weight="700" fill="#525252" text-anchor="middle">25</text>
+  <use href="#round" x="730" y="585"/><use href="#wrinkle" x="980" y="585"/>
+  <text x="730" y="645" font-size="21" fill="#0f172a" text-anchor="middle">둥근 완두 (RR, Rr)</text>
+  <text x="980" y="645" font-size="21" fill="#0f172a" text-anchor="middle">주름진 완두 (rr)</text>
+  <text x="845" y="140" font-size="34" font-weight="700" fill="#0f172a" text-anchor="middle">둥근 : 주름진 ≈ 3 : 1</text>
+  <text x="845" y="180" font-size="20" fill="#475569" text-anchor="middle">R이 r보다 우성 → R이 하나라도 있으면 둥근 완두</text>
+</svg>

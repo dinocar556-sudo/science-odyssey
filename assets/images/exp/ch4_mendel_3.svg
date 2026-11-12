@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif">
+  <defs>
+    <g id="rY"><circle r="26" fill="#facc15" stroke="#a16207" stroke-width="2"/><circle cx="-8" cy="-9" r="7" fill="#fef9c3"/></g>
+    <g id="rG"><circle r="26" fill="#65a30d" stroke="#3f6212" stroke-width="2"/><circle cx="-8" cy="-9" r="7" fill="#bef264"/></g>
+    <path id="wr" d="M0,-26 L7,-20 L15,-21 L18,-13 L25,-8 L22,0 L26,8 L18,13 L16,21 L7,20 L0,26 L-7,20 L-16,21 L-18,13 L-26,8 L-22,0 L-25,-8 L-18,-13 L-15,-21 L-7,-20 Z"/>
+    <g id="wY"><use href="#wr" fill="#facc15" stroke="#a16207" stroke-width="2"/><path d="M-10,-6 Q0,2 10,-6 M-12,6 Q0,14 12,6" stroke="#a16207" stroke-width="2.5" fill="none"/></g>
+    <g id="wG"><use href="#wr" fill="#65a30d" stroke="#3f6212" stroke-width="2"/><path d="M-10,-6 Q0,2 10,-6 M-12,6 Q0,14 12,6" stroke="#3f6212" stroke-width="2.5" fill="none"/></g>
+  </defs>
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <text x="40" y="52" font-size="28" font-weight="700" fill="#0f172a">두 쌍의 대립 형질 모의 실험 결과 (160번)</text>
+  <text x="600" y="110" font-size="34" font-weight="700" fill="#0f172a" text-anchor="middle">91 : 29 : 31 : 9  ≈  9 : 3 : 3 : 1</text>
+  <text x="600" y="148" font-size="20" fill="#475569" text-anchor="middle">모양(R/r)과 색(Y/y)은 서로 영향을 주지 않고 따로 유전된다 (독립의 법칙) · 예상: 90 : 30 : 30 : 10</text>
+
+  <line x1="140" y1="530" x2="1080" y2="530" stroke="#0f172a" stroke-width="3"/>
+  <rect x="190" y="190" width="150" height="340" fill="#eab308"/>
+  <rect x="420" y="422" width="150" height="108" fill="#65a30d"/>
+  <rect x="650" y="414" width="150" height="116" fill="#eab308" opacity="0.75"/>
+  <rect x="880" y="496" width="150" height="34" fill="#65a30d" opacity="0.75"/>
+  <g font-size="28" font-weight="700" fill="#0f172a" text-anchor="middle">
+    <text x="265" y="178">91</text><text x="495" y="410">29</text><text x="725" y="402">31</text><text x="955" y="484">9</text>
+  </g>
+  <use href="#rY" x="265" y="572"/><use href="#rG" x="495" y="572"/><use href="#wY" x="725" y="572"/><use href="#wG" x="955" y="572"/>
+  <g font-size="20" fill="#0f172a" text-anchor="middle">
+    <text x="265" y="630">둥글고 노란색</text><text x="495" y="630">둥글고 초록색</text>
+    <text x="725" y="630">주름지고 노란색</text><text x="955" y="630">주름지고 초록색</text>
+  </g>
+</svg>

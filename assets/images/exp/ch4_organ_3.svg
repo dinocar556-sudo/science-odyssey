@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif">
+  <defs>
+    <marker id="k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#334155"/></marker>
+  </defs>
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <text x="40" y="52" font-size="28" font-weight="700" fill="#0f172a">에너지를 얻기 위해 함께 일하는 기관계</text>
+
+  <!-- 순환계 (가운데) -->
+  <rect x="430" y="245" width="340" height="170" rx="26" fill="#fee2e2" stroke="#dc2626" stroke-width="4"/>
+  <text x="600" y="315" font-size="28" font-weight="700" fill="#b91c1c" text-anchor="middle">순환계</text>
+  <text x="600" y="352" font-size="20" fill="#7f1d1d" text-anchor="middle">심장과 혈관: 혈액이 물질을 운반</text>
+
+  <!-- 소화계 -->
+  <rect x="50" y="90" width="300" height="130" rx="18" fill="#fef9c3" stroke="#ca8a04" stroke-width="3"/>
+  <text x="200" y="140" font-size="26" font-weight="700" fill="#854d0e" text-anchor="middle">소화계</text>
+  <text x="200" y="178" font-size="19" fill="#713f12" text-anchor="middle">음식물을 소화해</text>
+  <text x="200" y="202" font-size="19" fill="#713f12" text-anchor="middle">영양소를 흡수</text>
+  <!-- 호흡계 -->
+  <rect x="50" y="450" width="300" height="140" rx="18" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+  <text x="200" y="500" font-size="26" font-weight="700" fill="#1e40af" text-anchor="middle">호흡계</text>
+  <text x="200" y="538" font-size="19" fill="#1e3a8a" text-anchor="middle">폐에서 산소를 받아들이고</text>
+  <text x="200" y="562" font-size="19" fill="#1e3a8a" text-anchor="middle">이산화 탄소를 내보냄</text>
+  <!-- 배설계 -->
+  <rect x="850" y="90" width="300" height="130" rx="18" fill="#ede9fe" stroke="#7c3aed" stroke-width="3"/>
+  <text x="1000" y="140" font-size="26" font-weight="700" fill="#5b21b6" text-anchor="middle">배설계</text>
+  <text x="1000" y="178" font-size="19" fill="#4c1d95" text-anchor="middle">콩팥에서 노폐물을 걸러</text>
+  <text x="1000" y="202" font-size="19" fill="#4c1d95" text-anchor="middle">오줌으로 내보냄</text>
+  <!-- 조직 세포 -->
+  <rect x="850" y="430" width="300" height="180" rx="18" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+  <text x="1000" y="478" font-size="25" font-weight="700" fill="#166534" text-anchor="middle">온몸의 세포 (근육 등)</text>
+  <text x="1000" y="514" font-size="19" fill="#14532d" text-anchor="middle">세포호흡:</text>
+  <text x="1000" y="540" font-size="19" fill="#14532d" text-anchor="middle">영양소 + 산소 →</text>
+  <text x="1000" y="566" font-size="19" fill="#14532d" text-anchor="middle">에너지 + 이산화 탄소 + 물</text>
+  <text x="1000" y="640" font-size="21" font-weight="700" fill="#b45309" text-anchor="middle">⚡ 에너지 → 근육 운동, 체온 유지</text>
+
+  <!-- 화살표 -->
+  <g stroke="#334155" stroke-width="4" fill="none" marker-end="url(#k)">
+    <path d="M 290 220 L 470 260"/>
+    <path d="M 300 455 L 440 380"/>
+    <path d="M 470 425 L 350 490"/>
+    <path d="M 770 360 L 905 425"/>
+    <path d="M 880 470 L 745 425"/>
+    <path d="M 760 260 L 900 220"/>
+  </g>
+  <g font-size="19" fill="#0f172a">
+    <text x="310" y="226">영양소</text>
+    <text x="300" y="405" fill="#1d4ed8" font-weight="700">산소 →</text>
+    <text x="400" y="510" fill="#475569" font-weight="700">← 이산화 탄소</text>
+    <text x="800" y="365" fill="#15803d" font-weight="700">영양소, 산소 →</text>
+    <text x="640" y="470" fill="#475569" font-weight="700">← 이산화 탄소, 노폐물</text>
+    <text x="760" y="222">노폐물</text>
+  </g>
+</svg>

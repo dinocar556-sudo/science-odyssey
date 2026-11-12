@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif">
+  <defs>
+    <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ef4444" stop-opacity="0.45"/><stop offset="1" stop-color="#ef4444" stop-opacity="0.05"/></linearGradient>
+    <g id="bottle">
+      <path d="M -55 0 L -55 -230 Q -55 -270 -22 -285 L -22 -315 L 22 -315 L 22 -285 Q 55 -270 55 -230 L 55 0 Z" fill="#e0f2fe" fill-opacity="0.65" stroke="#64748b" stroke-width="3"/>
+      <line x1="0" y1="-345" x2="0" y2="-60" stroke="#cbd5e1" stroke-width="10" stroke-linecap="round"/>
+      <line x1="0" y1="-300" x2="0" y2="-60" stroke="#dc2626" stroke-width="4"/>
+      <circle cx="0" cy="-55" r="10" fill="#dc2626"/>
+    </g>
+  </defs>
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <text x="40" y="48" font-size="27" font-weight="700" fill="#0f172a">공기 병과 이산화 탄소 병 비교 장치</text>
+
+  <!-- 적외선등 (가운데 위) -->
+  <line x1="600" y1="60" x2="600" y2="95" stroke="#475569" stroke-width="6"/>
+  <path d="M 545 95 L 655 95 L 690 150 L 510 150 Z" fill="#94a3b8" stroke="#334155" stroke-width="3"/>
+  <ellipse cx="600" cy="152" rx="70" ry="12" fill="#f87171"/>
+  <polygon points="540,160 660,160 900,600 300,600" fill="url(#beam)"/>
+  <text x="720" y="125" font-size="21" fill="#334155">적외선등</text>
+
+  <!-- 같은 거리 표시 -->
+  <g stroke="#2563eb" stroke-width="2.5" stroke-dasharray="8 6"><line x1="600" y1="160" x2="420" y2="300"/><line x1="600" y1="160" x2="780" y2="300"/></g>
+  <text x="470" y="232" font-size="20" font-weight="700" fill="#2563eb" text-anchor="end">같은 거리</text>
+  <text x="730" y="232" font-size="20" font-weight="700" fill="#2563eb">같은 거리</text>
+
+  <!-- 병 두 개 (대칭) -->
+  <use href="#bottle" x="420" y="600"/>
+  <rect x="398" y="268" width="44" height="22" rx="4" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+  <use href="#bottle" x="780" y="600"/>
+  <rect x="758" y="268" width="44" height="22" rx="4" fill="#dc2626" stroke="#7f1d1d" stroke-width="2"/>
+  <line x1="260" y1="600" x2="940" y2="600" stroke="#0f172a" stroke-width="3"/>
+  <text x="420" y="635" font-size="22" font-weight="700" fill="#0f172a" text-anchor="middle">공기만 든 병 (흰 뚜껑)</text>
+  <text x="780" y="635" font-size="22" font-weight="700" fill="#b91c1c" text-anchor="middle">이산화 탄소 병 (빨간 뚜껑)</text>
+
+  <!-- 같게 할 조건 -->
+  <rect x="960" y="210" width="210" height="250" rx="14" fill="#e2e8f0"/>
+  <text x="1065" y="248" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">같게 할 조건</text>
+  <g font-size="18" fill="#334155"><text x="985" y="290">· 등과의 거리</text><text x="985" y="324">· 병의 크기·모양</text><text x="985" y="358">· 처음 온도</text><text x="985" y="392">· 비추는 시간</text></g>
+  <text x="1065" y="436" font-size="18" font-weight="700" fill="#b91c1c" text-anchor="middle">다른 것: 병 속 기체</text>
+</svg>

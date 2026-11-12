@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif">
+  <defs>
+    <marker id="i" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#334155"/></marker>
+  </defs>
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <text x="40" y="52" font-size="28" font-weight="700" fill="#0f172a">광합성과 호흡의 비교</text>
+
+  <!-- 광합성 -->
+  <rect x="40" y="85" width="545" height="420" rx="20" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+  <text x="312" y="128" font-size="26" font-weight="700" fill="#166534" text-anchor="middle">광합성 (엽록체)</text>
+  <ellipse cx="312" cy="300" rx="85" ry="60" fill="#22c55e"/>
+  <text x="312" y="310" font-size="22" fill="#fff" text-anchor="middle" font-weight="700">엽록체</text>
+  <g stroke="#334155" stroke-width="4" marker-end="url(#i)">
+    <line x1="312" y1="170" x2="312" y2="232"/>
+    <line x1="80" y1="270" x2="222" y2="285"/><line x1="80" y1="345" x2="222" y2="320"/>
+    <line x1="400" y1="285" x2="540" y2="265"/><line x1="400" y1="320" x2="540" y2="345"/>
+  </g>
+  <text x="312" y="162" font-size="22" fill="#b45309" text-anchor="middle" font-weight="700">☀ 빛에너지</text>
+  <text x="70" y="258" font-size="21" fill="#0f172a">이산화 탄소</text>
+  <text x="70" y="380" font-size="21" fill="#0f172a">물</text>
+  <text x="430" y="252" font-size="21" fill="#0f172a">포도당(양분)</text>
+  <text x="470" y="380" font-size="21" fill="#0f172a">산소</text>
+  <text x="312" y="450" font-size="20" fill="#166534" text-anchor="middle">빛이 있을 때만 일어난다</text>
+  <text x="312" y="480" font-size="20" fill="#166534" text-anchor="middle">빛에너지 → 양분 속 화학 에너지로 저장</text>
+
+  <!-- 호흡 -->
+  <rect x="615" y="85" width="545" height="420" rx="20" fill="#ffedd5" stroke="#ea580c" stroke-width="3"/>
+  <text x="887" y="128" font-size="26" font-weight="700" fill="#9a3412" text-anchor="middle">호흡 (미토콘드리아)</text>
+  <ellipse cx="887" cy="300" rx="85" ry="60" fill="#f97316"/>
+  <text x="887" y="310" font-size="20" fill="#fff" text-anchor="middle" font-weight="700">미토콘드리아</text>
+  <g stroke="#334155" stroke-width="4" marker-end="url(#i)">
+    <line x1="655" y1="270" x2="797" y2="285"/><line x1="655" y1="345" x2="797" y2="320"/>
+    <line x1="975" y1="285" x2="1115" y2="265"/><line x1="975" y1="320" x2="1115" y2="345"/>
+    <line x1="887" y1="238" x2="887" y2="176"/>
+  </g>
+  <text x="645" y="258" font-size="21" fill="#0f172a">포도당(양분)</text>
+  <text x="645" y="380" font-size="21" fill="#0f172a">산소</text>
+  <text x="1000" y="252" font-size="21" fill="#0f172a">이산화 탄소</text>
+  <text x="1060" y="380" font-size="21" fill="#0f172a">물</text>
+  <text x="887" y="166" font-size="22" fill="#b45309" text-anchor="middle" font-weight="700">⚡ 생명 활동에 쓸 에너지</text>
+  <text x="887" y="450" font-size="20" fill="#9a3412" text-anchor="middle">낮과 밤 언제나 일어난다</text>
+  <text x="887" y="480" font-size="20" fill="#9a3412" text-anchor="middle">양분을 분해해 에너지를 얻는다</text>
+
+  <rect x="40" y="530" width="1120" height="110" rx="16" fill="#e2e8f0"/>
+  <text x="600" y="572" font-size="22" fill="#0f172a" text-anchor="middle" font-weight="700">광합성의 산물(포도당, 산소)은 호흡의 재료, 호흡의 산물(이산화 탄소, 물)은 광합성의 재료</text>
+  <text x="600" y="612" font-size="21" fill="#334155" text-anchor="middle">낮: 광합성량 &gt; 호흡량 → 이산화 탄소를 흡수 · 밤: 호흡만 → 이산화 탄소를 방출</text>
+</svg>

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif">
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <text x="40" y="52" font-size="28" font-weight="700" fill="#0f172a">대기 중 이산화 탄소 농도와 지구 평균 기온의 변화</text>
+
+  <g stroke="#e2e8f0" stroke-width="1.5">
+    <line x1="140" y1="529" x2="1060" y2="529"/><line x1="140" y1="458" x2="1060" y2="458"/><line x1="140" y1="388" x2="1060" y2="388"/>
+    <line x1="140" y1="317" x2="1060" y2="317"/><line x1="140" y1="246" x2="1060" y2="246"/><line x1="140" y1="175" x2="1060" y2="175"/>
+  </g>
+  <line x1="140" y1="600" x2="1060" y2="600" stroke="#0f172a" stroke-width="3"/>
+  <line x1="140" y1="600" x2="140" y2="130" stroke="#ea580c" stroke-width="3"/>
+  <line x1="1060" y1="600" x2="1060" y2="130" stroke="#dc2626" stroke-width="3"/>
+
+  <!-- 가로축: 연도 -->
+  <g font-size="19" fill="#334155" text-anchor="middle">
+    <text x="140" y="626">1960</text><text x="282" y="626">1970</text><text x="423" y="626">1980</text><text x="565" y="626">1990</text>
+    <text x="706" y="626">2000</text><text x="848" y="626">2010</text><text x="989" y="626">2020</text>
+  </g>
+  <text x="600" y="660" font-size="20" fill="#0f172a" text-anchor="middle">연도</text>
+
+  <!-- 왼쪽 축: CO2 (ppm) 300~430 -->
+  <g font-size="18" fill="#ea580c" text-anchor="end">
+    <text x="130" y="606">300</text><text x="130" y="535">320</text><text x="130" y="464">340</text><text x="130" y="394">360</text>
+    <text x="130" y="323">380</text><text x="130" y="252">400</text><text x="130" y="181">420</text>
+  </g>
+  <text x="140" y="112" font-size="20" fill="#ea580c" font-weight="700" text-anchor="middle">이산화 탄소 (ppm)</text>
+
+  <!-- 오른쪽 축: 기온 편차 (℃) -0.2~1.4 -->
+  <g font-size="18" fill="#dc2626">
+    <text x="1070" y="606">−0.2</text><text x="1070" y="491">0.2</text><text x="1070" y="376">0.6</text>
+    <text x="1070" y="261">1.0</text><text x="1070" y="146">1.4</text>
+  </g>
+  <text x="1060" y="112" font-size="20" fill="#dc2626" font-weight="700" text-anchor="middle">기온 편차 (℃)</text>
+
+  <!-- CO2 -->
+  <polyline points="140,540 282,508 423,462 565,409 706,352 848,282 989,197 1046,161" fill="none" stroke="#ea580c" stroke-width="5"/>
+  <g fill="#ea580c"><circle cx="140" cy="540" r="7"/><circle cx="282" cy="508" r="7"/><circle cx="423" cy="462" r="7"/><circle cx="565" cy="409" r="7"/><circle cx="706" cy="352" r="7"/><circle cx="848" cy="282" r="7"/><circle cx="989" cy="197" r="7"/><circle cx="1046" cy="161" r="7"/></g>
+  <text x="160" y="572" font-size="20" fill="#ea580c" font-weight="700">약 317</text>
+  <text x="900" y="150" font-size="20" fill="#ea580c" font-weight="700">약 420</text>
+
+  <!-- 기온 -->
+  <polyline points="140,551 282,534 423,468 565,413 706,428 848,336 989,252 1046,175" fill="none" stroke="#dc2626" stroke-width="5" stroke-dasharray="14 7"/>
+  <g fill="#dc2626"><circle cx="140" cy="551" r="7"/><circle cx="282" cy="534" r="7"/><circle cx="423" cy="468" r="7"/><circle cx="565" cy="413" r="7"/><circle cx="706" cy="428" r="7"/><circle cx="848" cy="336" r="7"/><circle cx="989" cy="252" r="7"/><circle cx="1046" cy="175" r="7"/></g>
+
+  <rect x="180" y="140" width="330" height="92" rx="10" fill="#fff" stroke="#cbd5e1"/>
+  <line x1="200" y1="170" x2="250" y2="170" stroke="#ea580c" stroke-width="5"/><text x="262" y="177" font-size="19" fill="#0f172a">대기 중 이산화 탄소</text>
+  <line x1="200" y1="208" x2="250" y2="208" stroke="#dc2626" stroke-width="5" stroke-dasharray="14 7"/><text x="262" y="215" font-size="19" fill="#0f172a">지구 평균 기온 편차</text>
+  <text x="600" y="584" font-size="16" fill="#64748b" text-anchor="middle">대략적인 값 · 이산화 탄소: 하와이 마우나로아 관측 / 기온 편차: 1951~1980년 평균과의 차이</text>
+</svg>

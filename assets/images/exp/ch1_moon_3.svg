@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" font-family="'Malgun Gothic','Apple SD Gothic Neo',sans-serif">
+  <rect width="1200" height="675" fill="#0f172a"/>
+  <text x="40" y="52" font-size="28" font-weight="700" fill="#f8fafc">일식과 월식이 일어나는 배열</text>
+
+  <!-- 일식 -->
+  <text x="40" y="112" font-size="24" font-weight="700" fill="#fbbf24">일식 (삭일 때): 태양 - 달 - 지구</text>
+  <circle cx="130" cy="220" r="80" fill="#fbbf24"/>
+  <g stroke="#fde68a" stroke-width="2" opacity="0.5">
+    <line x1="200" y1="182" x2="610" y2="198"/><line x1="200" y1="258" x2="610" y2="242"/>
+  </g>
+  <polygon points="620,198 620,242 905,224 905,216" fill="#020617" opacity="0.9"/>
+  <circle cx="620" cy="220" r="22" fill="#94a3b8"/>
+  <circle cx="960" cy="220" r="62" fill="#3b82f6"/>
+  <ellipse cx="900" cy="220" rx="8" ry="10" fill="#020617"/>
+  <g font-size="22" fill="#e2e8f0" text-anchor="middle">
+    <text x="130" y="330">태양</text><text x="620" y="280">달</text><text x="960" y="315">지구</text>
+  </g>
+  <text x="1040" y="190" font-size="18" fill="#94a3b8">달의 그림자가</text>
+  <text x="1040" y="214" font-size="18" fill="#94a3b8">지구 일부를 가림</text>
+
+  <line x1="40" y1="370" x2="1160" y2="370" stroke="#334155" stroke-width="2"/>
+
+  <!-- 월식 -->
+  <text x="40" y="420" font-size="24" font-weight="700" fill="#fca5a5">월식 (망일 때): 태양 - 지구 - 달</text>
+  <circle cx="130" cy="530" r="80" fill="#fbbf24"/>
+  <g stroke="#fde68a" stroke-width="2" opacity="0.5">
+    <line x1="200" y1="490" x2="560" y2="472"/><line x1="200" y1="570" x2="560" y2="588"/>
+  </g>
+  <polygon points="590,478 590,582 1100,555 1100,505" fill="#020617" opacity="0.85"/>
+  <circle cx="590" cy="530" r="62" fill="#3b82f6"/>
+  <circle cx="990" cy="530" r="22" fill="#b45309"/>
+  <g font-size="22" fill="#e2e8f0" text-anchor="middle">
+    <text x="130" y="640">태양</text><text x="590" y="625">지구</text><text x="990" y="590">달</text>
+  </g>
+  <text x="900" y="460" font-size="18" fill="#94a3b8">지구의 그림자 속에 달이 들어가</text>
+  <text x="900" y="484" font-size="18" fill="#94a3b8">어둡고 붉게 보임</text>
+</svg>
