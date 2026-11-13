@@ -297,6 +297,35 @@
   .mg-stage { user-select: none; }
   .mg-svg { display: block; width: 100%; height: auto; max-height: 21em; background: #0f1430; border-radius: 0.5em; }
   .mg-svg .slot { cursor: pointer; }
+  /* 달 미니게임: 달을 끌어 옮김 */
+  .mg-svg.moon-drag { touch-action: none; outline: none; }
+  .mg-svg .mg-moon { cursor: grab; }
+  .mg-svg.dragging, .mg-svg.dragging .mg-moon { cursor: grabbing; }
+  .mg-svg .moon-halo { transform-box: fill-box; transform-origin: center; animation: mgHalo 1.1s ease-in-out infinite; }
+  @keyframes mgHalo { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.22); } }
+  .mg-svg .ecl-fade { opacity: 0; animation: mgFadeIn 0.6s ease-out forwards; }
+  @keyframes mgFadeIn { to { opacity: 1; } }
+  .mg-svg .ecl-moon { animation: mgEclSlide 1.1s ease-out forwards; }
+  @keyframes mgEclSlide { from { transform: translateX(90px); } to { transform: translateX(0); } }
+  .mg-svg .lunar { animation: mgLunar 1.1s ease-in forwards; }
+  @keyframes mgLunar { to { fill: #b8552f; } }
+  /* 회로 미니게임: 너무 센 전류 → 번쩍이다가 펑 */
+  .mg-svg .bulb-flicker { animation: mgFlicker 0.09s steps(2) infinite; }
+  @keyframes mgFlicker { 50% { opacity: 0.15; } }
+  .mg-svg .burst-flash { opacity: 0; animation: mgBurstFlash 0.45s ease-out; }
+  @keyframes mgBurstFlash { 0% { opacity: 0.95; } 100% { opacity: 0; } }
+  .mg-svg .shard { transform-box: fill-box; transform-origin: center; animation: mgShard 0.7s ease-out forwards; }
+  @keyframes mgShard { to { transform: translate(var(--dx), var(--dy)) rotate(260deg); opacity: 0; } }
+  .mg-svg .smoke { opacity: 0; animation: mgSmoke 1.6s ease-out forwards; }
+  @keyframes mgSmoke { 0% { opacity: 0.7; transform: translateY(0) scale(0.6); } 100% { opacity: 0; transform: translateY(-46px) scale(1.6); } }
+  .mg-svg .smoke { transform-box: fill-box; transform-origin: center; }
+  /* 원자 저울: 분자가 접시에 떨어짐, 핀을 풀면 저울이 출렁 */
+  .mg-svg .mol-drop { animation: mgMolDrop 0.55s cubic-bezier(0.3, 0, 0.6, 1); }
+  @keyframes mgMolDrop { 0% { transform: translateY(-110px); opacity: 0.2; } 70% { transform: translateY(4px); opacity: 1; } 85% { transform: translateY(-5px); } 100% { transform: translateY(0); } }
+  .mg-svg .atom-beam, .mg-svg .atom-pan { transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .mg-svg .atom-beam.beam-wobble { animation: mgWobble 0.9s ease-out; }
+  @keyframes mgWobble { 0% { transform: rotate(0); } 25% { transform: rotate(-4deg); } 50% { transform: rotate(3deg); } 75% { transform: rotate(-1.5deg); } 100% { transform: rotate(0); } }
+  .mg-svg .burst-text { animation: mgPop 0.4s ease-out; transform-box: fill-box; transform-origin: center; }
   .mg-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.5em; margin-top: 0.6em; }
   .mg-label { color: #b0bec5; margin-right: 0.3em; }
   .mg-opt {
@@ -306,7 +335,7 @@
   .mg-opt:hover, .mg-opt:focus-visible { border-color: #ffd54f; outline: none; }
   .mg-opt.on { border-color: #ffd54f; background: #3a3220; }
   .mg-foot { display: flex; align-items: center; gap: 1em; margin-top: 0.7em; }
-  .mg-msg { flex: 1; min-height: 2.6em; line-height: 1.4; word-break: keep-all; color: #e0e0e0; }
+  .mg-msg { flex: 1; min-height: 2.6em; line-height: 1.4; word-break: keep-all; white-space: pre-line; color: #e0e0e0; }
   .mg-msg.ok { color: #a5d6a7; font-weight: bold; }
   .mg-msg.no { color: #ffcc80; }
   .mg-check {
@@ -314,6 +343,38 @@
     background: #ffd600; color: #000; border: 0; border-radius: 0.4em;
   }
   .mg-check:disabled { opacity: 0.5; cursor: wait; }
+  /* 게임 틀: 수호자 체력 · 하트 · 연속 정답 · 효과 */
+  .sp-panel.mg-panel { position: relative; }
+  .mg-hud { display: flex; align-items: center; gap: 1em; margin-bottom: 0.55em; padding: 0.45em 0.7em; background: rgba(255, 255, 255, 0.05); border-radius: 0.5em; }
+  .mg-boss { display: flex; align-items: center; gap: 0.6em; flex: 1; }
+  .mg-boss-face { width: 2.8em; height: 2.8em; border-radius: 0.4em; object-fit: cover; border: 0.12em solid #7e57c2; background: #2a1f4a; }
+  .mg-boss-info { display: flex; flex-direction: column; gap: 0.25em; }
+  .mg-boss-name { font-size: 0.9em; font-weight: bold; color: #d1c4e9; }
+  .mg-hp { display: flex; gap: 0.25em; }
+  .mg-hp i { width: 2.6em; height: 0.75em; border-radius: 0.3em; background: linear-gradient(#ef5350, #c62828); border: 0.08em solid #ffcdd2; transition: background 0.3s, opacity 0.3s; }
+  .mg-hp i.gone { background: #37284d; border-color: #5e4b7a; opacity: 0.7; }
+  .mg-hp i.hitnow { animation: mgCellBreak 0.5s ease-out; }
+  .mg-combo { min-width: 6em; text-align: center; font-weight: bold; color: #ffb74d; font-size: 1.05em; }
+  .mg-combo.pop { animation: mgPop 0.5s ease-out; }
+  .mg-hearts { display: flex; gap: 0.2em; font-size: 1.45em; }
+  .mg-hearts span { color: #ef5350; transition: color 0.3s, transform 0.3s; }
+  .mg-hearts span.lost { color: #4a4a5e; transform: scale(0.8); }
+  .mg-hearts span.breaknow { animation: mgHeartBreak 0.6s ease-out; }
+  .mg-boss-face.hit { animation: mgBossHit 0.5s ease-out; }
+  .mg-panel.shake { animation: mgShake 0.4s ease-in-out; }
+  .mg-fx { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .mg-float { position: absolute; font-weight: bold; font-size: 1.6em; text-shadow: 0 0.08em 0.2em #000; animation: mgFloat 1.1s ease-out forwards; white-space: nowrap; }
+  .mg-stars { position: absolute; left: 50%; top: 45%; transform: translate(-50%, -50%); font-size: 4em; letter-spacing: 0.1em; text-shadow: 0 0 0.3em rgba(255, 214, 0, 0.6);
+              padding: 0.15em 0.5em; border-radius: 0.4em; background: rgba(10, 6, 30, 0.82); box-shadow: 0 0 0.6em rgba(0, 0, 0, 0.6); }
+  .mg-stars span { display: inline-block; color: #ffd600; animation: mgStar 0.5s ease-out both; }
+  .mg-stars span.off { color: #4a4a5e; text-shadow: none; }
+  @keyframes mgShake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-0.5em); } 40% { transform: translateX(0.45em); } 60% { transform: translateX(-0.3em); } 80% { transform: translateX(0.2em); } }
+  @keyframes mgBossHit { 0% { transform: scale(1); filter: none; } 30% { transform: scale(1.18) rotate(-6deg); filter: brightness(2) sepia(1) hue-rotate(-40deg) saturate(4); } 100% { transform: scale(1); filter: none; } }
+  @keyframes mgCellBreak { 0% { transform: scale(1.4); background: #fff; } 100% { transform: scale(1); } }
+  @keyframes mgHeartBreak { 0% { transform: scale(1.5); color: #ff8a80; } 50% { transform: scale(0.6) rotate(-15deg); } 100% { transform: scale(0.8); } }
+  @keyframes mgPop { 0% { transform: scale(0.4); opacity: 0; } 60% { transform: scale(1.3); opacity: 1; } 100% { transform: scale(1); } }
+  @keyframes mgFloat { 0% { transform: translateY(0) scale(0.7); opacity: 0; } 15% { transform: translateY(-0.4em) scale(1.15); opacity: 1; } 100% { transform: translateY(-3em) scale(1); opacity: 0; } }
+  @keyframes mgStar { 0% { transform: scale(0) rotate(-90deg); } 70% { transform: scale(1.35) rotate(10deg); } 100% { transform: scale(1); } }
   /* 원자 저울: 반응식 */
   .eq-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.5em; font-size: 1.3em; margin: 0.4em 0 0.6em; }
   .eq-mol { display: flex; align-items: center; gap: 0.25em; padding: 0.2em 0.4em; background: #1f1f3a; border-radius: 0.4em; }
@@ -327,6 +388,25 @@
   .pn-table td, .pn-table th { border: 0.1em solid #546e7a; width: 4.2em; height: 3.4em; text-align: center; }
   .pn-table th { color: #ffd54f; background: #1f1f3a; }
   .pn-result { font-size: 1.2em; line-height: 1.6; }
+  /* 완두 미니게임: 주문서 + 교배하면 자손이 하나씩 태어남 */
+  .pea-order { position: relative; display: flex; align-items: center; justify-content: center; gap: 1em; flex-wrap: wrap;
+    padding: 0.45em 1em; background: #f3e9cf; color: #4e342e; border-radius: 0.4em; box-shadow: 0 0.2em 0 #a1887f; }
+  .po-title { font-weight: bold; }
+  .po-peas { display: inline-flex; gap: 0.25em; }
+  .po-pea { position: relative; display: inline-flex; flex-direction: column; align-items: center; line-height: 1; }
+  .po-pea small { font-size: 0.7em; font-weight: bold; color: #5d7a1f; }
+  .po-text { font-weight: bold; }
+  .po-stamp { position: absolute; right: 0.8em; top: 50%; padding: 0.15em 0.6em; border: 0.18em solid; border-radius: 0.3em;
+    font-weight: 800; font-size: 1.15em; transform: translateY(-50%) rotate(-10deg); opacity: 0; animation: mgStamp 0.35s ease-out forwards; background: rgba(243, 233, 207, 0.9); }
+  .po-stamp.ok { color: #2e7d32; border-color: #2e7d32; }
+  .po-stamp.no { color: #c62828; border-color: #c62828; }
+  @keyframes mgStamp { 0% { opacity: 0; transform: translateY(-50%) rotate(-10deg) scale(2.2); } 100% { opacity: 1; transform: translateY(-50%) rotate(-10deg) scale(1); } }
+  .pn-table td.pn-wait { color: #546e7a; font-size: 1.4em; }
+  .pn-born { animation: mgSprout 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) backwards; }
+  @keyframes mgSprout { 0% { opacity: 0; transform: scale(0.2) translateY(0.6em); } 100% { opacity: 1; transform: none; } }
+  .pn-gam { display: inline-block; }
+  .pn-gam.split { animation: mgGamete 0.35s ease-out; }
+  @keyframes mgGamete { 0% { transform: scale(1.8); color: #fff; } 100% { transform: none; } }
 
   /* ---- 사냥터: 몹 머리 위 공격 버튼 + 개념 확인 문제 ---- */
   #atk-btn {
@@ -675,6 +755,7 @@
   .wm-spirit span { color: #b0bec5; font-size: 0.9em; }
   .wm-checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35em; color: #90a4ae; line-height: 1.35; }
   .wm-checks li.done { color: #c5e1a5; }
+  .wm-stars { color: #ffd600; letter-spacing: 0.05em; margin-left: 0.2em; }
   .wm-here { color: #ffd54f; font-weight: bold; }
   .wm-go {
     font: inherit; font-weight: bold; padding: 0.5em 0.9em; cursor: pointer; align-self: flex-start;
@@ -874,8 +955,17 @@
         <span class="mg-round"></span>
         <button class="sp-close" type="button" aria-label="그만두기">×</button>
       </div>
+      <div class="mg-hud">
+        <div class="mg-boss">
+          <img class="mg-boss-face" src="assets/images/npc_guardian.jpg" alt="">
+          <div class="mg-boss-info"><span class="mg-boss-name">차원 수호자</span><div class="mg-hp" aria-label="수호자 체력"></div></div>
+        </div>
+        <div class="mg-combo" aria-live="polite"></div>
+        <div class="mg-hearts" aria-label="남은 하트"></div>
+      </div>
       <div class="mg-prompt"></div>
       <div class="mg-stage"></div>
+      <div class="mg-fx" aria-hidden="true"></div>
       <div class="mg-foot">
         <div class="mg-msg"></div>
         <button class="mg-check" type="button">확인</button>
@@ -1073,6 +1163,12 @@ const CONFIG = {
   },
 
   // 사냥터: 안개 몹에게 다가가 공격 → 그 정령 과목의 객관식 문제 (data/quiz.json, AI 안 씀)
+  // 차원 수호자의 시험(미니게임) 게임 틀
+  MINIGAME: {
+    HEARTS: 3,          // 틀릴 때마다 하나씩 잃음. 다 잃으면 힌트를 보고 그 문제를 다시 (탈락 없음)
+    SOUND: true,        // 효과음 (교실에서 끄려면 false)
+    STARS: [0, 2],      // 별점 기준: 실수 0번이면 ★★★, 2번까지 ★★, 그보다 많으면 ★
+  },
   HUNT: {
     QUIZ_URL: "data/quiz.json",
     EXP_CORRECT: 1,      // 정답(몹 처치) 하나당 떨어지는 톱니 조각 수 (Lv.2까지 5개, Lv.3까지 5개 더)
@@ -1897,8 +1993,9 @@ function buildSystemInstruction(quest, { hintLevel = 0, expStep = 1 } = {}) {
     ];
     if (exp.sim === "moon") {
       lines.push(
-        `- 이 실험에는 학생이 화면에서 직접 달을 옮겨 보는 시뮬레이션이 있다(위에서 본 태양·지구·달 배치와 지구에서 본 달 모양). ${exp.simFrom}단계부터 쓸 수 있다.`,
-        "- 시뮬레이션을 쓰는 단계에서는 관찰 결과를 말로 먼저 알려 주지 않는다. '달을 태양 반대쪽으로 옮겨 보렴'처럼 시뮬레이션에서 해 볼 조작을 한 번에 하나씩 제안하고, 보이는 모양을 학생이 말하게 한다.",
+        `- 이 실험에는 학생이 화면에서 직접 공을 옮겨 보는 시뮬레이션이 있다. 교실 모형 실험과 같게 전등은 태양, 공은 달, 학생의 머리는 지구다(위에서 본 배치와, 학생 눈에 보이는 공 모양). ${exp.simFrom}단계부터 쓸 수 있다.`,
+        "- 대화에서도 전등·공·머리로 말하고, 필요할 때 '전등(태양)', '공(달)'처럼 실제 천체와 연결해 준다.",
+        "- 시뮬레이션을 쓰는 단계에서는 관찰 결과를 말로 먼저 알려 주지 않는다. '공을 전등 반대쪽으로 옮겨 보렴'처럼 시뮬레이션에서 해 볼 조작을 한 번에 하나씩 제안하고, 보이는 모양을 학생이 말하게 한다.",
         "- 학생 답 앞에 [시뮬레이션 관찰]이 붙어 있으면 학생이 화면에서 실제로 본 결과다. 그 내용을 바탕으로 칭찬하거나 다음 조작을 제안한다. 학생 말이 화면 결과와 다르면 다시 보게 한다.",
       );
     }
@@ -2856,13 +2953,13 @@ class DialogueUI {
     this.el.img.addEventListener("error", () => { if (!retryAsJpg(this.el.img)) this.el.img.hidden = true; }); // 이미지 깨지면 단색 블록
     this.el.form.addEventListener("submit", (e) => { e.preventDefault(); this.handleEnter(); });
     this.el.text.addEventListener("click", () => this.skipOrNext());
-    root.querySelector("#dlg-close").addEventListener("click", () => this.close()); // ESC 없는 태블릿용
+    root.querySelector("#dlg-close").addEventListener("click", () => this.close(true)); // ESC 없는 태블릿용
     this.el.hint.addEventListener("click", () => this.requestHint());
     // [다음 ▶]: 이야기 장면, 질문 전 이야기 줄용. 누른 뒤 포커스를 풀어야 Space가 두 번 넘기지 않음
     this.el.next = root.querySelector("#dlg-next");
     this.el.next.addEventListener("click", () => { this.el.next.blur(); this.skipOrNext(); });
     window.addEventListener("keydown", (e) => {
-      if (this.isOpen && e.code === "Escape") { e.preventDefault(); this.close(); }
+      if (this.isOpen && e.code === "Escape") { e.preventDefault(); this.close(true); }
     });
   }
 
@@ -2893,13 +2990,15 @@ class DialogueUI {
   }
 
   // 이야기 장면: 입력창 없이 대사를 차례로 보여주고, 마지막에 [다음]을 누르면 닫힘
-  openStory(lines, onDone) {
+  // opts.cancelable: ×·Esc로 닫으면 onDone을 부르지 않음 (예: "다시 도전할래?" 같은 선택)
+  openStory(lines, onDone, opts = {}) {
     this.npc = null;
     this.lines = [...lines];
     this.index = 0;
     this.isOpen = true;
     this.story = true;
     this.onStoryDone = onDone || null;
+    this.storyCancelable = !!opts.cancelable;
     this.root.classList.add("story");
     this.setMastery(null);
     this.setHintAvailable(false);
@@ -3073,11 +3172,13 @@ class DialogueUI {
     if (this.onSubmit) this.onSubmit(reply);
   }
 
-  close() {
+  close(cancel = false) {
     if (!this.isOpen) return;
-    const storyDone = this.story ? this.onStoryDone : null;
+    // cancel: ×·Esc로 닫음. 취소할 수 있는 이야기면 다음 동작(onDone)을 하지 않음
+    const storyDone = this.story && !(cancel && this.storyCancelable) ? this.onStoryDone : null;
     this.story = false;
     this.onStoryDone = null;
+    this.storyCancelable = false;
     this.root.classList.remove("story", "no-portrait", "narration", "reading");
     if (this.art) this.art.hide();
     this.setLoading(false);
@@ -3177,30 +3278,38 @@ class ExperimentPanel {
     this.simDirty = false;
     if (this.exp.sim === "moon") {
       const k = this.simPos;
-      const where = k === 0 ? "태양 쪽(태양과 지구 사이)" : k === 4 ? "태양 반대쪽" : `태양 쪽에서 공전 방향으로 ${k * 45}° 돈 곳`;
-      return `달 위치: ${where} → 지구에서 본 모습: ${MOON_LOOKS[k]}`;
+      const where = k === 0 ? "전등 쪽(전등과 머리 사이)" : k === 4 ? "전등 반대쪽" : `전등 쪽에서 도는 방향으로 ${k * 45}° 돈 곳`;
+      return `공(달) 위치: ${where} → 내 눈에 보이는 공 모양: ${MOON_LOOKS[k]}`;
     }
     return "";
   }
 
-  // 달의 위상 시뮬레이션: 왼쪽은 위에서 본 태양·지구·달, 오른쪽은 지구에서 본 달 (미니게임 그림을 같이 씀)
+  // 달의 위상 시뮬레이션 (교실 모형 실험과 같게): 왼쪽은 위에서 본 전등(태양)·내 머리(지구)·공(달),
+  // 오른쪽은 내 눈에 보이는 공의 모양 (모양 그림은 미니게임 것을 같이 씀)
   renderMoonSim(showNames) {
     const sel = this.simPos;
     const EX = 200, EY = 175, OR = 120;
     const pos = (k) => [EX + OR * Math.cos(k * Math.PI / 4), EY - OR * Math.sin(k * Math.PI / 4)];
     let g = `viewBox="0 0 640 340">`;
-    g += `<text x="16" y="26" fill="#b0bec5" font-size="15">궤도 위 동그라미를 눌러 달을 옮겨 보세요</text>`;
-    g += `<circle cx="420" cy="175" r="30" fill="#ffca28"/><text x="420" y="228" fill="#ffe082" font-size="15" text-anchor="middle">태양</text>`;
-    for (const y of [105, 175, 245]) g += `<line x1="384" y1="${y}" x2="350" y2="${y}" stroke="#ffe082" stroke-width="3"/><path d="M350 ${y - 6} L338 ${y} L350 ${y + 6}Z" fill="#ffe082"/>`;
+    g += `<text x="16" y="26" fill="#b0bec5" font-size="15">동그라미를 눌러 공을 옮겨 보세요 (위에서 본 모습)</text>`;
+    // 전등 (태양): 빛나는 전구 + 빛살
+    g += `<circle cx="420" cy="175" r="40" fill="#fff59d" opacity="0.18"/>`;
+    for (let a = 0; a < 8; a++) { const t = a * Math.PI / 4; g += `<line x1="${420 + 30 * Math.cos(t)}" y1="${175 + 30 * Math.sin(t)}" x2="${420 + 38 * Math.cos(t)}" y2="${175 + 38 * Math.sin(t)}" stroke="#ffe082" stroke-width="3" stroke-linecap="round"/>`; }
+    g += `<circle cx="420" cy="175" r="24" fill="#fff59d" stroke="#fbc02d" stroke-width="3"/>`;
+    g += `<text x="420" y="236" fill="#ffe082" font-size="15" text-anchor="middle">전등</text><text x="420" y="254" fill="#90a4ae" font-size="12" text-anchor="middle">(태양)</text>`;
+    for (const y of [105, 245]) g += `<line x1="384" y1="${y}" x2="350" y2="${y}" stroke="#ffe082" stroke-width="3"/><path d="M350 ${y - 6} L338 ${y} L350 ${y + 6}Z" fill="#ffe082"/>`;
+    // 공이 도는 길과 내 머리 (지구): 위에서 본 머리, 전등 쪽 절반이 밝음
     g += `<circle cx="${EX}" cy="${EY}" r="${OR}" fill="none" stroke="#546e7a" stroke-dasharray="5 6"/>`;
-    g += `<circle cx="${EX}" cy="${EY}" r="24" fill="#1a237e"/><path d="M${EX} ${EY - 24} A24 24 0 0 1 ${EX} ${EY + 24}Z" fill="#4fc3f7"/>`;
-    g += `<text x="${EX}" y="${EY + 44}" fill="#b0bec5" font-size="14" text-anchor="middle">지구</text>`;
+    if (sel >= 0) { const [sx, sy] = pos(sel); g += `<line x1="${EX}" y1="${EY}" x2="${sx}" y2="${sy}" stroke="#80deea" stroke-width="2" stroke-dasharray="3 5" opacity="0.8"/>`; }
+    g += `<circle cx="${EX}" cy="${EY}" r="24" fill="#5d4037"/><path d="M${EX} ${EY - 24} A24 24 0 0 1 ${EX} ${EY + 24}Z" fill="#a1887f"/>`;
+    g += `<circle cx="${EX}" cy="${EY}" r="24" fill="none" stroke="#3e2723" stroke-width="2"/>`;
+    g += `<text x="${EX}" y="${EY + 44}" fill="#b0bec5" font-size="14" text-anchor="middle">내 머리</text><text x="${EX}" y="${EY + 61}" fill="#90a4ae" font-size="12" text-anchor="middle">(지구)</text>`;
     g += `<path d="M${EX + 85} ${EY - 85} A120 120 0 0 0 ${EX + 30} ${EY - 116}" fill="none" stroke="#90a4ae" stroke-width="2"/><path d="M${EX + 30} ${EY - 124} L${EX + 18} ${EY - 116} L${EX + 31} ${EY - 108}Z" fill="#90a4ae"/>`;
-    g += `<text x="${EX + 64}" y="${EY - 128}" fill="#90a4ae" font-size="13">공전 방향</text>`;
+    g += `<text x="${EX + 64}" y="${EY - 128}" fill="#90a4ae" font-size="13">도는 방향</text>`;
     for (let k = 0; k < 8; k++) {
       const [x, y] = pos(k);
       g += `<g class="slot" data-k="${k}"><circle cx="${x}" cy="${y}" r="20" fill="${k === sel ? "#263238" : "rgba(255,255,255,0.05)"}" stroke="${k === sel ? "#ffd54f" : "#78909c"}" stroke-width="2" stroke-dasharray="${k === sel ? "0" : "4 4"}"/>`;
-      if (k === sel) g += `<circle cx="${x}" cy="${y}" r="15" fill="#455a64"/><path d="M${x} ${y - 15} A15 15 0 0 1 ${x} ${y + 15}Z" fill="#fff6c8"/>`;
+      if (k === sel) g += `<circle cx="${x}" cy="${y}" r="15" fill="#546e7a"/><path d="M${x} ${y - 15} A15 15 0 0 1 ${x} ${y + 15}Z" fill="#fff6c8"/>`;
       if (showNames && MOON_SHORT[k]) {
         // 맨 위 자리(상현)는 위쪽 안내 문구와 겹치지 않게 왼쪽에 씀
         g += k === 2 ? `<text x="${x - 28}" y="${y + 5}" fill="#cfd8dc" font-size="13" text-anchor="end">${MOON_SHORT[k]}</text>`
@@ -3208,9 +3317,10 @@ class ExperimentPanel {
       }
       g += `</g>`;
     }
-    g += `<rect x="480" y="40" width="148" height="270" rx="12" fill="#1a1f3d"/><text x="554" y="72" fill="#e0e0e0" font-size="15" text-anchor="middle">지구에서 본 달</text>`;
-    g += sel < 0 ? `<text x="554" y="185" fill="#78909c" font-size="40" text-anchor="middle">?</text>`
-                 : moonPhaseSVG(554, 170, 52, sel) + (showNames ? `<text x="554" y="262" fill="#ffe082" font-size="14" text-anchor="middle">${MOON_NAMES[sel]}</text>` : "");
+    g += `<rect x="480" y="40" width="148" height="270" rx="12" fill="#1a1f3d"/><text x="554" y="68" fill="#e0e0e0" font-size="15" text-anchor="middle">내 눈에 보이는 공</text>`;
+    g += `<text x="554" y="88" fill="#90a4ae" font-size="12" text-anchor="middle">(지구에서 본 달)</text>`;
+    g += sel < 0 ? `<text x="554" y="190" fill="#78909c" font-size="40" text-anchor="middle">?</text>`
+                 : moonPhaseSVG(554, 178, 52, sel) + (showNames ? `<text x="554" y="268" fill="#ffe082" font-size="14" text-anchor="middle">${MOON_NAMES[sel]}</text>` : "");
     this.el.sim.innerHTML = svgEl(g);
     this.el.sim.querySelectorAll(".slot").forEach((s) => s.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -3582,6 +3692,7 @@ const gameState = {
   avatar: null, // 견습 탐구자 모습 ("시트:번호", 저장됨)
   playerName: "", // 견습 탐구자 이름 (저장됨). 대사의 {name}과 AI 지시문에 들어감
   bossDraft: "",  // 보스 논술 답 쓰던 것 (저장됨)
+  mgStars: {},    // 차원 수호자 시험의 최고 별점 { moon: 3, circuit: 2, ... } (저장됨)
 };
 
 function createSpiritState(data) {
@@ -4172,17 +4283,21 @@ const shuffled = (arr) => arr.map((v) => [Math.random(), v]).sort((a, b) => a[0]
 const svgEl = (html) => `<svg class="mg-svg" xmlns="http://www.w3.org/2000/svg" ${html}</svg>`;
 
 // 지구에서 본 달 모양 (k = 궤도 위치 0~7, 0 = 삭, 4 = 보름). 태양은 오른쪽(북반구 기준)
-function moonPhaseSVG(cx, cy, r, k) {
+function moonPhaseSVG(cx, cy, r, k) { return moonPhaseAngleSVG(cx, cy, r, k * 45); }
+
+// 같은 그림을 각도(도)로: 0 = 삭, 180 = 보름. 달을 끌 때 모양이 부드럽게 바뀌도록
+function moonPhaseAngleSVG(cx, cy, r, deg, lit = "#fff6c8") {
+  deg = ((deg % 360) + 360) % 360;
   let s = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#2b2d42" stroke="#78909c" stroke-width="2"/>`;
-  if (k === 0) return s;
-  if (k === 4) return s + `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#fff6c8"/>`;
-  const waxing = k < 4;
-  const phi = (waxing ? k : 8 - k) * 45; // 45, 90, 135
+  if (deg < 4 || deg > 356) return s;
+  if (Math.abs(deg - 180) < 4) return s + `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${lit}"/>`;
+  const waxing = deg < 180;
+  const phi = waxing ? deg : 360 - deg;
   const rx = Math.abs(r * Math.cos(phi * Math.PI / 180)).toFixed(1);
   const d = waxing
     ? `M${cx} ${cy - r} A${r} ${r} 0 0 1 ${cx} ${cy + r} A${rx} ${r} 0 0 ${phi < 90 ? 0 : 1} ${cx} ${cy - r}Z`
     : `M${cx} ${cy - r} A${r} ${r} 0 0 0 ${cx} ${cy + r} A${rx} ${r} 0 0 ${phi < 90 ? 1 : 0} ${cx} ${cy - r}Z`;
-  return s + `<path d="${d}" fill="#fff6c8"/>`;
+  return s + `<path d="${d}" fill="${lit}"/>`;
 }
 
 // 완두 그림: 둥근(R 있음) / 주름진(rr)
@@ -4225,45 +4340,144 @@ const MINIGAMES = {
   moon: {
     title: "달을 옮겨라 — 달의 위상과 일식·월식",
     rounds: 3,
+    // 달을 손으로 잡고 궤도를 따라 끌어 옮김. 끄는 동안 '지구에서 본 달' 모양이 부드럽게 바뀌고,
+    // 8자리마다 '딸깍' 걸리며, 놓으면 가장 가까운 자리로 붙음. 이름은 [확인]을 눌러야 알려 줌
     makeRound(i, el) {
       if (i === 0) this.targets = shuffled(MOON_TARGETS).slice(0, 3);
       const t = this.targets[i];
-      let sel = -1;
+      const eclipse = t.prompt.includes("일식") ? "solar" : t.prompt.includes("월식") ? "lunar" : "";
       const EX = 200, EY = 165, OR = 120;
-      const pos = (k) => [EX + OR * Math.cos(k * Math.PI / 4), EY - OR * Math.sin(k * Math.PI / 4)];
+      const xy = (deg) => [EX + OR * Math.cos(deg * Math.PI / 180), EY - OR * Math.sin(deg * Math.PI / 180)];
+      // 처음 자리: 정답이 아닌 곳 중 하나
+      const startK = shuffled([0, 1, 2, 3, 4, 5, 6, 7].filter((k) => !t.pos.includes(k)))[0];
+      let ang = startK * 45, moved = false, revealed = false, dragging = false, lastTick = startK, tween = 0;
+      const selK = () => ((Math.round(ang / 45) % 8) + 8) % 8;
+
+      let g = `viewBox="0 0 640 330">`;
+      // 햇빛 (오른쪽에서)
+      g += `<circle cx="420" cy="165" r="34" fill="#ffca28"/><text x="420" y="222" fill="#ffe082" font-size="15" text-anchor="middle">태양</text>`;
+      for (const y of [95, 165, 235]) g += `<line x1="378" y1="${y}" x2="345" y2="${y}" stroke="#ffe082" stroke-width="3"/><path d="M345 ${y - 6} L333 ${y} L345 ${y + 6}Z" fill="#ffe082"/>`;
+      g += `<g class="mg-shadow"></g>`; // 일식·월식 때 생기는 그림자
+      // 궤도와 지구 (오른쪽 반이 낮)
+      g += `<circle cx="${EX}" cy="${EY}" r="${OR}" fill="none" stroke="#546e7a" stroke-dasharray="5 6"/>`;
+      for (let k = 0; k < 8; k++) { const [x, y] = xy(k * 45); g += `<circle cx="${x}" cy="${y}" r="4" fill="#607d8b"/>`; }
+      g += `<circle cx="${EX}" cy="${EY}" r="24" fill="#1a237e"/><path d="M${EX} ${EY - 24} A24 24 0 0 1 ${EX} ${EY + 24}Z" fill="#4fc3f7"/>`;
+      g += `<text x="${EX}" y="${EY + 44}" fill="#b0bec5" font-size="14" text-anchor="middle">지구</text>`;
+      // 공전 방향 화살표 (시계 반대 방향)
+      g += `<path d="M${EX + 85} ${EY - 85} A120 120 0 0 0 ${EX + 30} ${EY - 116}" fill="none" stroke="#90a4ae" stroke-width="2"/><path d="M${EX + 30} ${EY - 124} L${EX + 18} ${EY - 116} L${EX + 31} ${EY - 108}Z" fill="#90a4ae"/>`;
+      g += `<text x="${EX + 70}" y="${EY - 128}" fill="#90a4ae" font-size="13">공전 방향</text>`;
+      // 달 (태양 쪽 오른쪽 반이 밝음). 처음엔 '잡아 보세요' 고리가 깜박임
+      g += `<g class="mg-moon"><circle class="moon-halo" r="25" fill="none" stroke="#ffd54f" stroke-width="2.5" stroke-dasharray="5 4"/>`
+        + `<circle class="moon-hit" r="30" fill="transparent"/><circle r="17" fill="#455a64" stroke="#ffd54f" stroke-width="2"/>`
+        + `<path class="moon-lit" d="M0 -17 A17 17 0 0 1 0 17Z" fill="#fff6c8"/></g>`;
+      // 지구에서 본 모습
+      g += `<rect x="480" y="30" width="148" height="270" rx="12" fill="#1a1f3d"/><text class="mg-view-title" x="554" y="62" fill="#e0e0e0" font-size="15" text-anchor="middle">지구에서 본 달</text>`;
+      g += `<g class="mg-view"></g>`;
+      el.innerHTML = svgEl(g);
+      const svg = el.querySelector("svg");
+      svg.classList.add("moon-drag");
+      svg.setAttribute("tabindex", "0");
+      const q = (s) => svg.querySelector(s);
+
       const draw = () => {
-        let g = `viewBox="0 0 640 330">`;
-        // 햇빛 (오른쪽에서)
-        g += `<circle cx="420" cy="165" r="34" fill="#ffca28"/><text x="420" y="222" fill="#ffe082" font-size="15" text-anchor="middle">태양</text>`;
-        for (const y of [95, 165, 235]) g += `<line x1="378" y1="${y}" x2="345" y2="${y}" stroke="#ffe082" stroke-width="3"/><path d="M345 ${y - 6} L333 ${y} L345 ${y + 6}Z" fill="#ffe082"/>`;
-        // 궤도와 지구 (오른쪽 반이 낮)
-        g += `<circle cx="${EX}" cy="${EY}" r="${OR}" fill="none" stroke="#546e7a" stroke-dasharray="5 6"/>`;
-        g += `<circle cx="${EX}" cy="${EY}" r="24" fill="#1a237e"/><path d="M${EX} ${EY - 24} A24 24 0 0 1 ${EX} ${EY + 24}Z" fill="#4fc3f7"/>`;
-        g += `<text x="${EX}" y="${EY + 44}" fill="#b0bec5" font-size="14" text-anchor="middle">지구</text>`;
-        // 공전 방향 화살표 (시계 반대 방향)
-        g += `<path d="M${EX + 85} ${EY - 85} A120 120 0 0 0 ${EX + 30} ${EY - 116}" fill="none" stroke="#90a4ae" stroke-width="2"/><path d="M${EX + 30} ${EY - 124} L${EX + 18} ${EY - 116} L${EX + 31} ${EY - 108}Z" fill="#90a4ae"/>`;
-        g += `<text x="${EX + 70}" y="${EY - 128}" fill="#90a4ae" font-size="13">공전 방향</text>`;
-        // 달을 놓을 자리 8곳 (고른 곳엔 달: 태양 쪽 반이 밝음)
-        for (let k = 0; k < 8; k++) {
-          const [x, y] = pos(k);
-          g += `<g class="slot" data-k="${k}"><circle cx="${x}" cy="${y}" r="19" fill="${k === sel ? "#263238" : "rgba(255,255,255,0.04)"}" stroke="${k === sel ? "#ffd54f" : "#78909c"}" stroke-width="2" stroke-dasharray="${k === sel ? "0" : "4 4"}"/>`;
-          if (k === sel) g += `<circle cx="${x}" cy="${y}" r="14" fill="#455a64"/><path d="M${x} ${y - 14} A14 14 0 0 1 ${x} ${y + 14}Z" fill="#fff6c8"/>`;
-          g += `</g>`;
-        }
-        // 지구에서 본 모습
-        g += `<rect x="480" y="30" width="148" height="270" rx="12" fill="#1a1f3d"/><text x="554" y="62" fill="#e0e0e0" font-size="15" text-anchor="middle">지구에서 본 달</text>`;
-        g += sel < 0 ? `<text x="554" y="175" fill="#78909c" font-size="40" text-anchor="middle">?</text>`
-                     : moonPhaseSVG(554, 160, 52, sel) + `<text x="554" y="250" fill="#ffe082" font-size="14" text-anchor="middle">${MOON_NAMES[sel]}</text>`;
-        el.innerHTML = svgEl(g);
-        el.querySelectorAll(".slot").forEach((s) => s.addEventListener("click", () => { sel = Number(s.dataset.k); draw(); }));
+        const [x, y] = xy(ang);
+        q(".mg-moon").setAttribute("transform", `translate(${x.toFixed(1)} ${y.toFixed(1)})`);
+        q(".moon-halo").style.display = moved ? "none" : "";
+        const k = selK();
+        q(".mg-view").innerHTML = moonPhaseAngleSVG(554, 160, 52, ang)
+          + (revealed ? `<text x="554" y="250" fill="#ffe082" font-size="14" text-anchor="middle">${MOON_NAMES[k]}</text>`
+                      : `<text x="554" y="250" fill="#78909c" font-size="13" text-anchor="middle">어떤 달일까?</text>`);
       };
+      const setAng = (deg) => {
+        ang = ((deg % 360) + 360) % 360;
+        moved = true; revealed = false;
+        // 8자리 가까이 지나갈 때 '딸깍'
+        const k = selK(), off = Math.abs(((ang - k * 45 + 540) % 360) - 180);
+        if (k !== lastTick && off > 172) { lastTick = k; sfx("tick"); }
+        draw();
+      };
+      // 손을 놓으면 가장 가까운 자리로 부드럽게 붙음
+      const snap = () => {
+        const from = ang, to = Math.round(ang / 45) * 45, t0 = performance.now();
+        cancelAnimationFrame(tween);
+        const step = (now) => {
+          const p = Math.min(1, (now - t0) / 140);
+          ang = ((from + (to - from) * p) % 360 + 360) % 360;
+          draw();
+          if (p < 1) tween = requestAnimationFrame(step);
+          else { lastTick = selK(); }
+        };
+        tween = requestAnimationFrame(step);
+      };
+      const toSvg = (e) => {
+        const p = svg.createSVGPoint(); p.x = e.clientX; p.y = e.clientY;
+        return p.matrixTransform(svg.getScreenCTM().inverse());
+      };
+      const angleAt = (p) => Math.atan2(EY - p.y, p.x - EX) * 180 / Math.PI;
+      svg.addEventListener("pointerdown", (e) => {
+        if (revealed && el._locked) return;
+        const p = toSvg(e), d = Math.hypot(p.x - EX, p.y - EY);
+        if (d < OR - 48 || d > OR + 48) return; // 궤도 근처를 잡았을 때만
+        e.preventDefault();
+        dragging = true; svg.classList.add("dragging");
+        cancelAnimationFrame(tween);
+        try { svg.setPointerCapture(e.pointerId); } catch { /* 무시 */ }
+        setAng(angleAt(p));
+      });
+      svg.addEventListener("pointermove", (e) => { if (dragging) setAng(angleAt(toSvg(e))); });
+      const release = () => { if (!dragging) return; dragging = false; svg.classList.remove("dragging"); snap(); };
+      svg.addEventListener("pointerup", release);
+      svg.addEventListener("pointercancel", release);
+      // 키보드: ← → (또는 ↑ ↓)로 한 칸씩
+      el._onKey = (e) => {
+        const dir = { ArrowLeft: 1, ArrowUp: 1, ArrowRight: -1, ArrowDown: -1 }[e.code];
+        if (!dir || el._locked) return;
+        e.preventDefault();
+        cancelAnimationFrame(tween);
+        setAng(Math.round(ang / 45) * 45 + dir * 45);
+        lastTick = selK();
+      };
+      if (!el._keyHooked) {
+        el._keyHooked = true;
+        window.addEventListener("keydown", (e) => { if (el._onKey && el.isConnected && !el.closest("#mg-modal").hidden) el._onKey(e); });
+      }
+      el._locked = false;
       draw();
+
+      // 정답일 때 일식·월식 장면
+      const playEclipse = () => {
+        if (eclipse === "solar") {
+          // 달 그림자가 지구에 닿음 + 지구에서 보면 달이 태양을 가림
+          q(".mg-shadow").innerHTML = `<polygon class="ecl-fade" points="${EX + OR},${EY - 15} ${EX + OR},${EY + 15} ${EX + 22},${EY + 7} ${EX + 22},${EY - 7}" fill="rgba(0,0,0,0.6)"/>`;
+          q(".mg-view-title").textContent = "지구에서 본 하늘";
+          q(".mg-view").innerHTML = `<circle class="ecl-fade" cx="554" cy="160" r="66" fill="#ffe082" fill-opacity="0.7"/><circle cx="554" cy="160" r="50" fill="#ffca28"/>`
+            + `<circle class="ecl-moon" cx="554" cy="160" r="51" fill="#1b1d33"/>`
+            + `<text class="ecl-fade" x="554" y="250" fill="#ffe082" font-size="15" text-anchor="middle">개기 일식!</text>`;
+        } else if (eclipse === "lunar") {
+          // 지구 그림자 속으로 들어간 달이 붉게 보임
+          q(".mg-shadow").innerHTML = `<polygon class="ecl-fade" points="${EX},${EY - 24} ${EX},${EY + 24} ${EX - OR - 40},${EY + 16} ${EX - OR - 40},${EY - 16}" fill="rgba(0,0,0,0.55)"/>`;
+          q(".moon-lit").classList.add("lunar");
+          q(".mg-view").innerHTML = moonPhaseAngleSVG(554, 160, 52, 180).replace(/fill="#fff6c8"/, 'class="lunar" fill="#fff6c8"')
+            + `<text class="ecl-fade" x="554" y="250" fill="#ffab91" font-size="15" text-anchor="middle">개기 월식!</text>`;
+        }
+      };
+
       return {
-        prompt: `${t.prompt} (궤도 위 동그라미를 눌러 달을 놓고 [확인])`,
+        prompt: `${t.prompt} (달을 잡고 궤도를 따라 끌어 옮긴 뒤 [확인] · 키보드 ← →도 돼요)`,
         check: () => {
-          if (sel < 0) return { ok: false, msg: "궤도 위 동그라미 하나를 눌러 달을 놓아 주세요." };
-          if (t.pos.includes(sel)) return { ok: true, msg: `정답! 달이 그 자리에 있을 때 ${t.prompt.match(/'(.+?)'/)[1]}${t.prompt.includes("식") ? "이 일어날 수 있어." : "이 보여."}` };
-          return { ok: false, msg: `지금 자리에서는 '${MOON_NAMES[sel]}'${josa(MOON_NAMES[sel], "으로", "로")} 보여. ${t.hint}` };
+          if (!moved) return { ok: false, incomplete: true, msg: "노란 고리가 깜박이는 달을 잡고 궤도를 따라 끌어 보세요." };
+          cancelAnimationFrame(tween);
+          ang = Math.round(ang / 45) * 45 % 360;
+          const k = selK();
+          revealed = true;
+          draw();
+          if (t.pos.includes(k)) {
+            el._locked = true;
+            if (eclipse) playEclipse();
+            else svg.querySelector(".mg-view").insertAdjacentHTML("afterbegin", `<circle class="ecl-fade" cx="554" cy="160" r="64" fill="#ffd54f" opacity="0.18"/>`);
+            return { ok: true, msg: `정답! 달이 그 자리에 있을 때 ${t.prompt.match(/'(.+?)'/)[1]}${eclipse ? "이 일어날 수 있어." : "이 보여."}` };
+          }
+          return { ok: false, msg: `지금 자리에서는 '${MOON_NAMES[k]}'${josa(MOON_NAMES[k].replace(/\(.*\)$/, ""), "으로", "로")} 보여. ${t.hint}` };
         },
       };
     },
@@ -4281,18 +4495,54 @@ const MINIGAMES = {
       ][i];
       const slots = cfg.fixedR ? [...cfg.fixedR, null] : [null, null];
       let V = cfg.V || 0;
+      // 스위치를 켜야 전류가 흐름: "off" | "on"(알맞거나 약함) | "over"(너무 셈 → 깜박) | "burst"(전구가 터짐)
+      let sw = "off";
+      const gen = (el._gen = (el._gen || 0) + 1); // 문제가 바뀌면 남은 타이머는 무시
       const R = () => slots.reduce((a, s) => a + (s || 0), 0);
       const I = () => (R() > 0 && V > 0 ? V / R() : 0);
       const fmt = (x) => (Math.round(x * 100) / 100).toString();
+      const BX = 310, BY = 220; // 전구 자리
+      const bulbSVG = (ratio) => {
+        const fil = `<path d="M${BX - 8} ${BY + 4} l4 -9 l4 9 l4 -9 l4 9" fill="none" stroke="#8d6e63" stroke-width="2"/>`;
+        if (sw === "burst") {
+          // 깨진 유리 + 튀는 조각 + 연기
+          let s = `<circle cx="${BX}" cy="${BY}" r="40" fill="#fff" class="burst-flash"/>`;
+          s += `<path d="M${BX - 22} ${BY} L${BX - 14} ${BY - 9} L${BX - 9} ${BY - 2} L${BX - 2} ${BY - 14} L${BX + 5} ${BY - 4} L${BX + 13} ${BY - 12} L${BX + 22} ${BY} A22 22 0 0 1 ${BX - 22} ${BY}Z" fill="#37474f" stroke="#90a4ae" stroke-width="2"/>`;
+          [[-30, -46], [26, -50], [-44, -10], [42, -18], [6, -60]].forEach(([dx, dy], n) => {
+            s += `<polygon class="shard" style="--dx:${dx}px;--dy:${dy}px;animation-delay:${n * 0.03}s" points="${BX - 4},${BY - 6} ${BX + 5},${BY - 9} ${BX + 1},${BY + 2}" fill="#cfd8dc"/>`;
+          });
+          [0, 0.25, 0.5].forEach((d, n) => { s += `<circle class="smoke" style="animation-delay:${d}s" cx="${BX - 6 + n * 6}" cy="${BY - 12}" r="${9 + n * 2}" fill="#90a4ae"/>`; });
+          return s + `<text x="${BX + 34}" y="${BY - 30}" fill="#ff8a65" font-size="22" font-weight="bold" class="burst-text">펑!</text>`;
+        }
+        if (sw === "off") return `<circle cx="${BX}" cy="${BY}" r="22" fill="#455a64" fill-opacity="0.6" stroke="#eceff1" stroke-width="2"/>` + fil;
+        if (sw === "over") return `<circle cx="${BX}" cy="${BY}" r="46" fill="#fff" class="bulb-flicker" opacity="0.6"/><circle cx="${BX}" cy="${BY}" r="22" fill="#ffffff" stroke="#eceff1" stroke-width="2" class="bulb-flicker"/>` + fil;
+        const b = Math.min(1, ratio * ratio); // 밝기는 전류의 제곱에 비례 (전력)
+        return `<circle cx="${BX}" cy="${BY}" r="${(26 + b * 22).toFixed(1)}" fill="#fff59d" opacity="${(b * 0.55).toFixed(2)}"/>`
+          + `<circle cx="${BX}" cy="${BY}" r="22" fill="#fff59d" fill-opacity="${(0.25 + b * 0.75).toFixed(2)}" stroke="#eceff1" stroke-width="2"/>` + fil;
+      };
       const draw = () => {
         const cur = I(), ratio = cfg.target ? cur / cfg.target : 0;
-        const glow = Math.max(0, Math.min(1, ratio));
-        const exact = R() > 0 && V > 0 && Math.abs(cur - cfg.target) < 1e-9;
-        let g = `viewBox="0 0 640 280">`;
+        const flowing = sw === "on" || sw === "over";
+        let g = `viewBox="0 0 640 300">`;
         g += `<rect x="70" y="60" width="480" height="160" fill="none" stroke="#b0bec5" stroke-width="4"/>`;
-        // 전지 (왼쪽)
-        g += `<rect x="52" y="112" width="36" height="56" fill="#0f1430"/><line x1="56" y1="125" x2="84" y2="125" stroke="#ffd54f" stroke-width="5"/><line x1="62" y1="140" x2="78" y2="140" stroke="#ffd54f" stroke-width="5"/><line x1="56" y1="155" x2="84" y2="155" stroke="#ffd54f" stroke-width="5"/>`;
-        g += `<text x="30" y="148" fill="#ffe082" font-size="18" text-anchor="middle">${V ? V + " V" : "? V"}</text>`;
+        // 전류의 흐름 (스위치를 켰을 때만, 센 전류일수록 빠르게): 전지 (+)극에서 나와 시계 방향으로
+        if (flowing && cur > 0) {
+          const dur = Math.max(0.6, 6 / cur).toFixed(2);
+          for (let n = 0; n < 12; n++) {
+            g += `<circle r="4" fill="#ffee58"><animateMotion dur="${dur}s" repeatCount="indefinite" begin="-${(n * dur / 12).toFixed(2)}s" path="M70 120 V60 H550 V220 H70 Z"/></circle>`;
+          }
+        }
+        // 스위치 (아래 도선 왼쪽): 끊긴 도선 + 지렛대
+        g += `<rect x="146" y="214" width="48" height="12" fill="#0f1430"/>`;
+        g += sw === "off"
+          ? `<line x1="150" y1="220" x2="184" y2="196" stroke="#eceff1" stroke-width="4" stroke-linecap="round"/>`
+          : `<line x1="150" y1="220" x2="190" y2="220" stroke="#eceff1" stroke-width="4" stroke-linecap="round"/>`;
+        g += `<circle cx="150" cy="220" r="5" fill="#eceff1"/><circle cx="190" cy="220" r="5" fill="#eceff1"/>`;
+        g += `<text x="170" y="246" fill="${sw === "off" ? "#90a4ae" : "#a5d6a7"}" font-size="13" text-anchor="middle">스위치 ${sw === "off" ? "OFF" : "ON"}</text>`;
+        // 전지 (왼쪽): 긴 선이 (+)극, 짧은 선이 (−)극
+        g += `<rect x="50" y="112" width="40" height="52" fill="#0f1430"/><line x1="52" y1="128" x2="88" y2="128" stroke="#ffd54f" stroke-width="4"/><line x1="61" y1="146" x2="79" y2="146" stroke="#ffd54f" stroke-width="7"/>`;
+        g += `<text x="98" y="126" fill="#ffd54f" font-size="14">+</text><text x="98" y="152" fill="#ffd54f" font-size="14">−</text>`;
+        g += `<text x="30" y="143" fill="#ffe082" font-size="18" text-anchor="middle">${V ? V + " V" : "? V"}</text>`;
         // 저항 칸 2개 (위쪽 도선)
         slots.forEach((s, k) => {
           const x = 180 + k * 160;
@@ -4302,12 +4552,12 @@ const MINIGAMES = {
         });
         // 전류계 (오른쪽)
         g += `<circle cx="550" cy="140" r="34" fill="#0f1430" stroke="#80deea" stroke-width="3"/><text x="550" y="135" fill="#80deea" font-size="16" text-anchor="middle">A</text>`;
-        g += `<text x="550" y="158" fill="#e0f7fa" font-size="16" text-anchor="middle">${R() > 0 && V > 0 ? fmt(cur) + " A" : "--"}</text>`;
-        // 전구 (아래쪽)
-        const col = ratio > 1.05 ? "#ff7043" : "#fff59d";
-        g += `<circle cx="310" cy="220" r="${26 + glow * 14}" fill="${col}" opacity="${(glow * 0.45).toFixed(2)}"/>`;
-        g += `<circle cx="310" cy="220" r="22" fill="${glow > 0 ? col : "#455a64"}" opacity="${(0.35 + glow * 0.65).toFixed(2)}" stroke="#eceff1" stroke-width="2"/>`;
-        g += `<text x="310" y="268" fill="#b0bec5" font-size="15" text-anchor="middle">목표 전류 ${cfg.target} A · 전체 저항 ${R()} Ω${exact ? " ✓" : ""}</text>`;
+        // 스위치를 켜기 전엔 전류계가 '?' → 옴의 법칙으로 미리 계산해야 함
+        g += `<text x="550" y="158" fill="#e0f7fa" font-size="16" text-anchor="middle">${sw === "off" ? "?" : sw === "burst" ? "0 A" : fmt(cur) + " A"}</text>`;
+        // 전구 (아래쪽): 목표 전류에 딱 맞게 만든 전구 → 더 세면 터짐
+        g += `<rect x="${BX - 30}" y="${BY - 6}" width="60" height="12" fill="#0f1430"/>`;
+        g += bulbSVG(ratio);
+        g += `<text x="${BX}" y="292" fill="#b0bec5" font-size="15" text-anchor="middle">전구: ${cfg.target} A에 딱 맞음 (더 세면 터짐!) · 전체 저항 ${R()} Ω</text>`;
         el.innerHTML = svgEl(g);
         // 고르는 단추
         const row = document.createElement("div");
@@ -4319,29 +4569,44 @@ const MINIGAMES = {
           row.innerHTML = `<span class="mg-label">전압 고르기:</span>` + cfg.volts.map((v) => `<button type="button" class="mg-opt${v === V ? " on" : ""}" data-v="${v}">${v} V</button>`).join("");
         }
         el.appendChild(row);
+        // 회로를 고치면 스위치가 다시 꺼지고, 터진 전구는 새것으로 바뀜
+        const edit = (fn) => { if (locked) return; fn(); sw = "off"; draw(); };
         row.querySelectorAll("[data-r]").forEach((b) => b.addEventListener("click", () => {
           const k = slots.indexOf(null);
-          if (k >= 0) { slots[k] = Number(b.dataset.r); draw(); }
+          if (k >= 0) edit(() => { slots[k] = Number(b.dataset.r); });
         }));
-        row.querySelectorAll("[data-v]").forEach((b) => b.addEventListener("click", () => { V = Number(b.dataset.v); draw(); }));
+        row.querySelectorAll("[data-v]").forEach((b) => b.addEventListener("click", () => edit(() => { V = Number(b.dataset.v); })));
         el.querySelectorAll(".slot").forEach((sv) => sv.addEventListener("click", () => {
           const k = Number(sv.dataset.k);
           if (cfg.fixedR && k < cfg.fixedR.length) return;
-          slots[k] = null; draw();
+          edit(() => { slots[k] = null; });
         }));
       };
+      let locked = false; // 정답 뒤엔 더 못 바꿈
       draw();
+      const later = (ms, fn) => setTimeout(() => { if (el._gen === gen && el.isConnected) fn(); }, ms);
       return {
+        checkLabel: "스위치 ON ⚡",
         prompt: cfg.cards
-          ? `전지 전압은 ${cfg.V} V야. 저항을 골라 넣어 전구에 꼭 ${cfg.target} A가 흐르게 하라.`
-          : `저항은 ${cfg.fixedR[0]} Ω으로 정해져 있어. 전지의 전압을 골라 전구에 꼭 ${cfg.target} A가 흐르게 하라.`,
+          ? `전지 전압은 ${cfg.V} V야. 저항을 골라 넣고 스위치를 켜서 전구에 꼭 ${cfg.target} A가 흐르게 하라. (전류계는 스위치를 켜야 보여!)`
+          : `저항은 ${cfg.fixedR[0]} Ω으로 정해져 있어. 전압을 고르고 스위치를 켜서 전구에 꼭 ${cfg.target} A가 흐르게 하라. (전류계는 스위치를 켜야 보여!)`,
         check: () => {
-          if (!V) return { ok: false, msg: "전압을 먼저 골라 주세요." };
-          if (R() === 0) return { ok: false, msg: "저항을 하나 이상 넣어 주세요. 저항이 없으면 전류가 너무 많이 흘러 위험해요!" };
+          if (!V) return { ok: false, incomplete: true, msg: "전압을 먼저 골라 주세요." };
+          if (R() === 0) return { ok: false, incomplete: true, msg: "저항을 하나 이상 넣어 주세요. 저항이 없으면 전류가 너무 많이 흘러 위험해요!" };
+          if (sw !== "off") return { ok: false, incomplete: true, msg: "회로를 고친 다음 다시 스위치를 켜 보세요." };
           const cur = I();
-          if (Math.abs(cur - cfg.target) < 1e-9) return { ok: true, msg: `딱 맞아! 전류 = 전압 ÷ 저항 = ${V} ÷ ${R()} = ${fmt(cur)} A` };
-          if (cur > cfg.target) return { ok: false, msg: `지금 ${fmt(cur)} A — 전류가 너무 커! ${cfg.cards ? "전압이 같을 때 저항을 크게 하면 전류는 어떻게 될까?" : "전압을 낮추면 전류는 어떻게 될까?"}` };
-          return { ok: false, msg: `지금 ${fmt(cur)} A — 전류가 너무 작아! ${cfg.cards ? "저항을 작게 하면 전류는 어떻게 될까?" : "전압을 높이면 전류는 어떻게 될까?"}` };
+          if (Math.abs(cur - cfg.target) < 1e-9) {
+            sw = "on"; locked = true; draw();
+            return { ok: true, msg: `딱 맞아! 전류 = 전압 ÷ 저항 = ${V} ÷ ${R()} = ${fmt(cur)} A` };
+          }
+          if (cur > cfg.target) {
+            // 너무 센 전류: 번쩍번쩍하다가 펑!
+            sw = "over"; draw();
+            later(450, () => { sw = "burst"; draw(); sfx("pop"); });
+            return { ok: false, msg: `펑! 전구가 터졌어. 지금 ${fmt(cur)} A — 전류가 너무 커! ${cfg.cards ? "전압이 같을 때 저항을 크게 하면 전류는 어떻게 될까?" : "전압을 낮추면 전류는 어떻게 될까?"} (회로를 고치면 새 전구로 바뀌어요)` };
+          }
+          sw = "on"; draw();
+          return { ok: false, msg: `전구가 너무 어두워. 지금 ${fmt(cur)} A — 전류가 너무 작아! ${cfg.cards ? "저항을 작게 하면 전류는 어떻게 될까?" : "전압을 높이면 전류는 어떻게 될까?"} (회로를 고친 뒤 다시 스위치 ON)` };
         },
       };
     },
@@ -4361,56 +4626,128 @@ const MINIGAMES = {
         return c;
       };
       const elems = [...new Set(mols.flatMap((m) => Object.keys(m.a)))];
-      const draw = () => {
-        const L = count("L"), Rr = count("R");
-        const mass = (c) => Object.entries(c).reduce((a, [e, n]) => a + ATOM_MASS[e] * n, 0);
-        const diff = mass(Rr) - mass(L);
-        const tilt = Math.max(-12, Math.min(12, diff * 0.4)); // 무거운 쪽이 내려감
-        // 반응식 (계수 ▲▼)
-        let eqHtml = `<div class="eq-row">`;
-        mols.forEach((m, k) => {
-          if (k > 0) eqHtml += `<span class="eq-op">${mols[k - 1].side === m.side ? "+" : "→"}</span>`;
-          eqHtml += `<span class="eq-mol"><span class="eq-step"><button type="button" data-k="${k}" data-d="1">▲</button><span class="eq-coef">${coef[k]}</span><button type="button" data-k="${k}" data-d="-1">▼</button></span>${m.f}</span>`;
-        });
-        eqHtml += `</div>`;
-        // 저울
-        let g = `viewBox="0 0 640 230">`;
-        g += `<polygon points="320,200 300,225 340,225" fill="#78909c"/><line x1="320" y1="200" x2="320" y2="110" stroke="#78909c" stroke-width="6"/>`;
-        g += `<g transform="rotate(${tilt.toFixed(1)} 320 110)"><line x1="110" y1="110" x2="530" y2="110" stroke="#b0bec5" stroke-width="6"/>`;
-        const pan = (cx, c, label) => {
-          let s = `<line x1="${cx}" y1="110" x2="${cx - 70}" y2="150" stroke="#78909c"/><line x1="${cx}" y1="110" x2="${cx + 70}" y2="150" stroke="#78909c"/>`;
-          s += `<rect x="${cx - 95}" y="150" width="190" height="10" rx="4" fill="#b0bec5"/>`;
-          s += `<text x="${cx}" y="185" fill="#b0bec5" font-size="14" text-anchor="middle">${label}</text>`;
-          let n = 0;
-          for (const e of elems) for (let q = 0; q < (c[e] || 0); q++, n++) {
-            const col = n % 9, row = Math.floor(n / 9);
-            s += `<circle cx="${cx - 80 + col * 20}" cy="${140 - row * 18}" r="8" fill="${ATOM_COLOR[e]}" stroke="#263238"/>`;
-          }
-          return s;
-        };
-        g += pan(160, L, "반응 전") + pan(480, Rr, "반응 후") + `</g>`;
-        // 원소별 개수
-        const tally = elems.map((e) => {
-          const same = (L[e] || 0) === (Rr[e] || 0);
-          return `<span style="color:${same ? "#a5d6a7" : "#ffcc80"}"><b style="color:${ATOM_COLOR[e]}">●</b> ${e} ${L[e] || 0} : ${Rr[e] || 0} ${same ? "✓" : "✗"}</span>`;
-        }).join(" &nbsp; ");
-        el.innerHTML = eqHtml + svgEl(g) + `<div class="mg-row">${tally}</div>`;
-        el.querySelectorAll(".eq-step button").forEach((b) => b.addEventListener("click", () => {
-          const k = Number(b.dataset.k);
-          coef[k] = Math.max(1, Math.min(6, coef[k] + Number(b.dataset.d)));
-          draw();
-        }));
+      const mass = (c) => Object.entries(c).reduce((a, [e, n]) => a + ATOM_MASS[e] * n, 0);
+      // 저울은 처음에 고정핀으로 잠겨 있음 → 원자 수를 스스로 세고 [저울 풀기]를 눌러야 기울기·개수가 보임
+      let released = false, done = false;
+
+      // 반응식 (계수 ▲▼)
+      let eqHtml = `<div class="eq-row">`;
+      mols.forEach((m, k) => {
+        if (k > 0) eqHtml += `<span class="eq-op">${mols[k - 1].side === m.side ? "+" : "→"}</span>`;
+        eqHtml += `<span class="eq-mol"><span class="eq-step"><button type="button" data-k="${k}" data-d="1">▲</button><span class="eq-coef" data-k="${k}">${coef[k]}</span><button type="button" data-k="${k}" data-d="-1">▼</button></span>${m.f}</span>`;
+      });
+      eqHtml += `</div>`;
+      // 저울 (막대·접시는 한 덩어리로 기울어짐)
+      const PAN = { L: 160, R: 480 }, BY = 96, PY = 200; // 막대 높이, 접시 높이
+      let g = `viewBox="0 46 640 236">`;
+      g += `<polygon points="320,252 298,278 342,278" fill="#78909c"/><line x1="320" y1="252" x2="320" y2="${BY}" stroke="#78909c" stroke-width="6"/>`;
+      g += `<g class="atom-beam"><line x1="110" y1="${BY}" x2="530" y2="${BY}" stroke="#b0bec5" stroke-width="6"/>`;
+      for (const side of ["L", "R"]) {
+        const cx = PAN[side];
+        g += `<g class="atom-pan" data-side="${side}" style="transform-origin:${cx}px ${BY}px">`; // 접시는 늘 수평으로 매달림
+        g += `<line x1="${cx}" y1="${BY}" x2="${cx - 90}" y2="${PY}" stroke="#78909c"/><line x1="${cx}" y1="${BY}" x2="${cx + 90}" y2="${PY}" stroke="#78909c"/>`;
+        g += `<rect x="${cx - 99}" y="${PY}" width="198" height="10" rx="4" fill="#b0bec5"/>`;
+        g += `<text x="${cx}" y="${PY + 30}" fill="#b0bec5" font-size="14" text-anchor="middle">${side === "L" ? "반응 전" : "반응 후"}</text>`;
+        g += `<text class="pan-mass" data-side="${side}" x="${cx}" y="${PY + 48}" fill="#ffe082" font-size="13" text-anchor="middle"></text>`;
+        g += `<g class="pan-mols" data-side="${side}"></g></g>`;
+      }
+      g += `</g>`;
+      g += `<g class="atom-pin"><circle cx="320" cy="${BY}" r="9" fill="#e53935" stroke="#ffcdd2" stroke-width="2"/><text x="320" y="${BY - 16}" fill="#ef9a9a" font-size="12" text-anchor="middle">고정핀</text></g>`;
+      g += `<circle cx="320" cy="${BY}" r="4" fill="#eceff1"/>`;
+      el.innerHTML = eqHtml + svgEl(g) + `<div class="mg-row atom-tally"></div>`;
+      const q = (s) => el.querySelector(s);
+      q("svg").style.maxHeight = "17em"; // 반응식·개수 줄·안내 글이 한 화면에 들어가게
+      const beam = q(".atom-beam");
+      beam.style.transformOrigin = `320px ${BY}px`;
+
+      // 분자 그림: 가운데 원자 하나 + 둘레 원자들 (H₂·O₂·N₂처럼 한 종류면 나란히)
+      const molSVG = (a, x, y, cls) => {
+        const list = Object.entries(a).flatMap(([e, n]) => Array(n).fill(e));
+        const R = (e) => (e === "H" ? 6.5 : 9);
+        const atom = (e, ax, ay) => `<circle cx="${ax.toFixed(1)}" cy="${ay.toFixed(1)}" r="${R(e)}" fill="${ATOM_COLOR[e]}" stroke="#263238" stroke-width="1.5"/>`;
+        let s = `<g class="${cls}">`;
+        if (Object.keys(a).length === 1) {
+          s += list.map((e, n) => atom(e, x + (n - (list.length - 1) / 2) * 13, y)).join("");
+        } else {
+          const center = Object.entries(a).find(([, n]) => n === 1)[0];
+          const others = list.filter((e, n) => !(e === center && n === list.indexOf(center)));
+          const heavy = others.every((e) => e !== "H");
+          const angles = heavy && others.length === 2 ? [180, 0]
+            : { 2: [215, 325], 3: [200, 270, 340], 4: [45, 135, 225, 315] }[others.length] || [];
+          others.forEach((e, n) => {
+            const t = angles[n] * Math.PI / 180, d = e === "H" ? 12 : 15;
+            s += atom(e, x + d * Math.cos(t), y - d * Math.sin(t));
+          });
+          s += atom(center, x, y); // 가운데 원자를 맨 위에
+        }
+        return s + `</g>`;
       };
-      draw();
+      // 접시 위 자리: 분자 종류마다 자기 구역이 있어 다른 분자가 밀리지 않음
+      const cellsFor = (side) => {
+        const ks = mols.map((m, k) => k).filter((k) => mols[k].side === side);
+        const cols = ks.length === 1 ? 3 : 2, W = 48, H = 32;
+        return ks.map((k, si) => {
+          const x0 = PAN[side] - (ks.length * cols * W) / 2 + si * cols * W + W / 2;
+          return { k, pos: (n) => [x0 + (n % cols) * W, PY - 14 - Math.floor(n / cols) * H] };
+        });
+      };
+      const drawPans = (dropK = -1) => {
+        for (const side of ["L", "R"]) {
+          let s = "";
+          for (const { k, pos } of cellsFor(side)) {
+            for (let n = 0; n < coef[k]; n++) {
+              const [x, y] = pos(n);
+              s += molSVG(mols[k].a, x, y, k === dropK && n === coef[k] - 1 ? "mol-drop" : "");
+            }
+          }
+          q(`.pan-mols[data-side="${side}"]`).innerHTML = s;
+        }
+        mols.forEach((m, k) => { q(`.eq-coef[data-k="${k}"]`).textContent = coef[k]; });
+      };
+      // 고정핀: 잠그면 수평 + 개수 숨김, 풀면 무거운 쪽으로 기울고 개수·질량이 보임
+      const setReleased = (on) => {
+        released = on;
+        q(".atom-pin").style.display = on ? "none" : "";
+        const L = count("L"), Rr = count("R");
+        const tilt = on ? Math.max(-12, Math.min(12, (mass(Rr) - mass(L)) * 0.4)) : 0; // 무거운 쪽이 내려감
+        beam.classList.remove("beam-wobble");
+        if (on && tilt === 0) { void beam.offsetWidth; beam.classList.add("beam-wobble"); }
+        beam.style.transform = `rotate(${tilt.toFixed(1)}deg)`;
+        el.querySelectorAll(".atom-pan").forEach((p) => { p.style.transform = `rotate(${(-tilt).toFixed(1)}deg)`; });
+        el.querySelectorAll(".pan-mass").forEach((t) => { t.textContent = on ? `질량 ${mass(t.dataset.side === "L" ? L : Rr)}` : ""; });
+        q(".atom-tally").innerHTML = on
+          ? elems.map((e) => {
+            const same = (L[e] || 0) === (Rr[e] || 0);
+            return `<span style="color:${same ? "#a5d6a7" : "#ffcc80"}"><b style="color:${ATOM_COLOR[e]}">●</b> ${e} ${L[e] || 0} : ${Rr[e] || 0} ${same ? "✓" : "✗"}</span>`;
+          }).join(" &nbsp; ")
+          : `<span class="mg-label">반응 전·후의 원자 수를 직접 세어 보고 [저울 풀기]를 눌러 확인! 🔒</span>`;
+      };
+      el.querySelectorAll(".eq-step button").forEach((b) => b.addEventListener("click", () => {
+        if (done) return;
+        const k = Number(b.dataset.k), next = Math.max(1, Math.min(6, coef[k] + Number(b.dataset.d)));
+        if (next === coef[k]) return;
+        const up = next > coef[k];
+        coef[k] = next;
+        drawPans(up ? k : -1);
+        sfx(up ? "plop" : "tick");
+        if (released) setReleased(false); // 계수를 바꾸면 다시 잠금
+      }));
+      drawPans();
+      setReleased(false);
+
       const gcd = (a, b) => (b ? gcd(b, a % b) : a);
       return {
-        prompt: `${eq.name}: 반응 전과 후의 원자 수가 같아지도록 ▲▼로 계수를 맞춰라. (원자 저울이 수평이 되면 성공)`,
+        checkLabel: "저울 풀기 🔓",
+        prompt: `${eq.name}: 반응 전과 후의 원자 수가 같아지도록 ▲▼로 계수를 맞추고 저울을 풀어라. (▲를 누르면 분자가 접시에 떨어져요)`,
         check: () => {
+          if (released) return { ok: false, incomplete: true, msg: "계수를 바꾼 다음 다시 저울을 풀어 보세요." };
+          setReleased(true);
           const L = count("L"), Rr = count("R");
           const bad = elems.filter((e) => (L[e] || 0) !== (Rr[e] || 0));
-          if (bad.length) return { ok: false, msg: `${bad.join(", ")} 원자 수가 반응 전과 후에 달라. 원자는 새로 생기거나 사라지지 않아! 계수를 바꿔 맞춰 봐. (작은 숫자는 바꿀 수 없어)` };
-          if (coef.reduce(gcd) > 1) return { ok: false, msg: "원자 수는 맞았어! 그런데 계수를 더 간단한 정수비로 줄일 수 있어." };
-          return { ok: true, msg: `균형! 계수비 ${coef.join(" : ")} — 원자의 종류와 수가 그대로라 질량이 보존돼.` };
+          if (bad.length) return { ok: false, msg: `저울이 기울었어! ${bad.join(", ")} 원자 수가 반응 전과 후에 달라. 원자는 새로 생기거나 사라지지 않아. (작은 숫자는 바꿀 수 없어)` };
+          if (coef.reduce(gcd) > 1) return { ok: false, msg: "저울은 수평이야! 그런데 계수를 더 간단한 정수비로 줄일 수 있어." };
+          done = true;
+          return { ok: true, msg: `균형! 계수비 ${coef.join(" : ")} — 원자의 종류와 수가 그대로라 질량이 보존돼. (${mass(L)} = ${mass(Rr)})` };
         },
       };
     },
@@ -4421,48 +4758,81 @@ const MINIGAMES = {
     title: "완두 교배 연구소 — 멘델의 유전 법칙",
     rounds: 3,
     makeRound(i, el) {
+      // 멘델 농장의 주문서를 받아, 부모를 고르고 [교배하기]를 눌러야 자손이 태어남 (그 전엔 퍼넷 칸이 '?')
       const cfg = [
-        { prompt: "자손이 모두 둥근 완두이면서, 모두 잡종(Rr)이 되도록 부모를 골라라.", ok: (k) => k.Rr === 4 },
-        { prompt: "자손이 '둥근 완두 : 주름진 완두 = 3 : 1'로 나오도록 부모를 골라라.", ok: (k) => k.round === 3 },
-        { prompt: "자손이 '둥근 완두 : 주름진 완두 = 1 : 1'로 나오도록 부모를 골라라.", ok: (k) => k.round === 2 },
+        { prompt: "자손이 모두 둥근 완두이면서, 모두 잡종(Rr)이 되도록 부모를 골라라.", ok: (k) => k.Rr === 4,
+          order: ["Rr", "Rr", "Rr", "Rr"], orderText: "둥근 완두 4개 · 모두 잡종(Rr)" },
+        { prompt: "자손이 '둥근 완두 : 주름진 완두 = 3 : 1'로 나오도록 부모를 골라라.", ok: (k) => k.round === 3,
+          order: ["R", "R", "R", "rr"], orderText: "둥근 : 주름진 = 3 : 1" },
+        { prompt: "자손이 '둥근 완두 : 주름진 완두 = 1 : 1'로 나오도록 부모를 골라라.", ok: (k) => k.round === 2,
+          order: ["R", "R", "rr", "rr"], orderText: "둥근 : 주름진 = 1 : 1" },
       ][i];
       const G = ["RR", "Rr", "rr"];
       const par = [null, null];
+      let crossed = false, done = false, lastOk = false;
       const cross = () => {
         const kids = [];
         for (const a of par[0]) for (const b of par[1]) kids.push(a === "r" && b === "R" ? "Rr" : a + b);
         return kids;
       };
       const draw = () => {
-        let h = "";
+        // 주문서 (교배하면 도장이 쾅)
+        let h = `<div class="pea-order"><span class="po-title">📜 멘델 농장 주문서</span>`
+          + `<span class="po-peas">${cfg.order.map((g) => `<span class="po-pea">${peaIcon(g.includes("R"), 28)}${g === "Rr" ? "<small>Rr</small>" : ""}</span>`).join("")}</span>`
+          + `<span class="po-text">${cfg.orderText}</span>`
+          + (crossed ? `<span class="po-stamp ${lastOk ? "ok" : "no"}" style="animation-delay:${0.95}s">${lastOk ? "주문 완료!" : "주문과 달라요"}</span>` : "")
+          + `</div>`;
         par.forEach((p, k) => {
           h += `<div class="mg-row"><span class="mg-label">${k === 0 ? "어미 완두" : "아비 완두"}:</span>`
             + G.map((g) => `<button type="button" class="mg-opt${p === g ? " on" : ""}" data-p="${k}" data-g="${g}">${peaIcon(g.includes("R"))}${g}</button>`).join("") + `</div>`;
         });
-        if (par[0] && par[1]) {
-          const kids = cross();
-          const round = kids.filter((g) => g.includes("R")).length;
-          h += `<div class="pn-wrap"><table class="pn-table"><tr><th></th><th>${par[1][0]}</th><th>${par[1][1]}</th></tr>`;
-          for (let r = 0; r < 2; r++) {
-            h += `<tr><th>${par[0][r]}</th>`;
-            for (let c = 0; c < 2; c++) { const g = kids[r * 2 + c]; h += `<td>${peaIcon(g.includes("R"), 26)}<br>${g}</td>`; }
-            h += `</tr>`;
+        // 퍼넷 사각형: 머리줄은 각 부모가 만드는 생식세포(분리의 법칙), 칸은 교배해야 채워짐
+        const gam = (p, n) => (p ? `<span class="pn-gam${crossed ? " split" : ""}">${p[n]}</span>` : "?");
+        const kids = par[0] && par[1] ? cross() : null;
+        h += `<div class="pn-wrap"><table class="pn-table"><tr><th></th><th>${gam(par[1], 0)}</th><th>${gam(par[1], 1)}</th></tr>`;
+        for (let r = 0; r < 2; r++) {
+          h += `<tr><th>${gam(par[0], r)}</th>`;
+          for (let c = 0; c < 2; c++) {
+            const n = r * 2 + c;
+            h += crossed
+              ? `<td class="pn-born" style="animation-delay:${(0.25 + n * 0.17).toFixed(2)}s">${peaIcon(kids[n].includes("R"), 26)}<br>${kids[n]}</td>`
+              : `<td class="pn-wait">?</td>`;
           }
-          h += `</table><div class="pn-result">자손 4개 중<br>둥근 완두 <b>${round}</b> : 주름진 완두 <b>${4 - round}</b></div></div>`;
+          h += `</tr>`;
+        }
+        if (crossed) {
+          const round = kids.filter((g) => g.includes("R")).length;
+          h += `</table><div class="pn-result pn-born" style="animation-delay:0.95s">자손 4개 중<br>둥근 완두 <b>${round}</b> : 주름진 완두 <b>${4 - round}</b></div></div>`;
         } else {
-          h += `<div class="mg-row" style="color:#90a4ae">부모 완두 둘을 고르면 퍼넷 사각형이 채워져요. (R = 둥근 형질, 우성 / r = 주름진 형질, 열성)</div>`;
+          h += `</table><div class="pn-result" style="color:#90a4ae">부모를 고르고<br>[교배하기]를 누르면<br>자손이 태어나요<br><small>(R 둥근·우성 / r 주름진·열성)</small></div></div>`;
         }
         el.innerHTML = h;
-        el.querySelectorAll("[data-p]").forEach((b) => b.addEventListener("click", () => { par[Number(b.dataset.p)] = b.dataset.g; draw(); }));
+        el.querySelectorAll("[data-p]").forEach((b) => b.addEventListener("click", () => {
+          if (done) return;
+          par[Number(b.dataset.p)] = b.dataset.g;
+          crossed = false; // 부모를 바꾸면 새로 교배해야 함
+          draw();
+        }));
       };
       draw();
       return {
-        prompt: cfg.prompt,
+        checkLabel: "교배하기 🌱",
+        prompt: cfg.prompt + " (자손은 [교배하기]를 눌러야 보여!)",
         check: () => {
-          if (!par[0] || !par[1]) return { ok: false, msg: "어미 완두와 아비 완두를 모두 골라 주세요." };
+          if (!par[0] || !par[1]) return { ok: false, incomplete: true, msg: "어미 완두와 아비 완두를 모두 골라 주세요." };
+          if (crossed) return { ok: false, incomplete: true, msg: "부모 완두를 바꾼 다음 다시 교배해 보세요." };
           const kids = cross();
           const k = { round: kids.filter((g) => g.includes("R")).length, Rr: kids.filter((g) => g === "Rr").length };
-          if (cfg.ok(k)) return { ok: true, msg: `성공! ${par[0]} × ${par[1]} — 대립유전자가 나뉘어 생식세포로 들어가고(분리의 법칙), 우성인 둥근 형질이 나타나.` };
+          lastOk = cfg.ok(k);
+          crossed = true;
+          if (lastOk) done = true;
+          draw();
+          if (lastOk) {
+            const why = k.round === 4 ? "자손이 모두 R을 가져서 우성인 둥근 형질만 나타나."
+              : k.round === 3 ? "잡종끼리 교배하면 숨어 있던 열성(주름진) 형질이 1/4로 다시 나타나."
+              : "잡종(Rr)과 주름진 순종(rr)을 교배하면 둥근 : 주름진이 1 : 1로 나와.";
+            return { ok: true, msg: `주문 완료! ${par[0]} × ${par[1]} — 대립유전자가 나뉘어 생식세포로 들어가고(분리의 법칙), ${why}` };
+          }
           return { ok: false, msg: `둥근 ${k.round} : 주름진 ${4 - k.round}이 나왔어. 각 부모가 만드는 생식세포(R 또는 r)를 떠올려 다시 골라 봐.` };
         },
       };
@@ -4470,9 +4840,47 @@ const MINIGAMES = {
   },
 };
 
+// 짧은 효과음 (소리 파일 없이 브라우저에서 바로 만듦). kind: "hit" | "combo" | "wrong" | "break" | "win"
+let sfxCtx = null;
+function sfx(kind) {
+  if (!CONFIG.MINIGAME.SOUND) return;
+  try {
+    sfxCtx = sfxCtx || new (window.AudioContext || window.webkitAudioContext)();
+    if (sfxCtx.state === "suspended") sfxCtx.resume();
+    const NOTES = {
+      hit:   [[660, 0, 0.08, "square"], [990, 0.07, 0.12, "square"]],
+      combo: [[660, 0, 0.07, "square"], [880, 0.06, 0.07, "square"], [1320, 0.12, 0.14, "square"]],
+      wrong: [[260, 0, 0.12, "triangle"], [180, 0.1, 0.2, "triangle"]],
+      break: [[200, 0, 0.15, "sawtooth"], [140, 0.13, 0.25, "sawtooth"]],
+      tick:  [[1400, 0, 0.035, "square"]],
+      plop:  [[520, 0, 0.06, "triangle"], [260, 0.05, 0.1, "triangle"]],
+      pop:   [[1800, 0, 0.04, "square"], [320, 0.02, 0.1, "sawtooth"], [90, 0.08, 0.3, "sawtooth"]],
+      win:   [[523, 0, 0.12, "triangle"], [659, 0.12, 0.12, "triangle"], [784, 0.24, 0.12, "triangle"], [1047, 0.36, 0.35, "triangle"]],
+    }[kind] || [];
+    const t0 = sfxCtx.currentTime;
+    for (const [freq, at, dur, type] of NOTES) {
+      const o = sfxCtx.createOscillator(), g = sfxCtx.createGain();
+      o.type = type; o.frequency.value = freq;
+      g.gain.setValueAtTime(0.0001, t0 + at);
+      g.gain.exponentialRampToValueAtTime(0.09, t0 + at + 0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + at + dur);
+      o.connect(g).connect(sfxCtx.destination);
+      o.start(t0 + at); o.stop(t0 + at + dur + 0.02);
+    }
+  } catch { /* 소리를 못 내는 환경이면 조용히 넘어감 */ }
+}
+
+// 별점 (실수 횟수로): ★★★ / ★★ / ★
+function mgStarsFor(mistakes) {
+  const [three, two] = CONFIG.MINIGAME.STARS;
+  return mistakes <= three ? 3 : mistakes <= two ? 2 : 1;
+}
+const starText = (n) => "★".repeat(n) + "☆".repeat(3 - n);
+
 class MinigameUI {
   constructor(stage) {
     this.modal = stage.querySelector("#mg-modal");
+    this.panel = this.modal.querySelector(".mg-panel");
     this.el = {
       title: this.modal.querySelector("#mg-title"),
       round: this.modal.querySelector(".mg-round"),
@@ -4480,6 +4888,11 @@ class MinigameUI {
       stage: this.modal.querySelector(".mg-stage"),
       msg: this.modal.querySelector(".mg-msg"),
       check: this.modal.querySelector(".mg-check"),
+      face: this.modal.querySelector(".mg-boss-face"),
+      hp: this.modal.querySelector(".mg-hp"),
+      hearts: this.modal.querySelector(".mg-hearts"),
+      combo: this.modal.querySelector(".mg-combo"),
+      fx: this.modal.querySelector(".mg-fx"),
     };
     this.isOpen = false;
     this.el.check.addEventListener("click", () => this.onCheck());
@@ -4491,17 +4904,53 @@ class MinigameUI {
     }, true);
   }
 
+  // onDone(success, stars): 끝까지 통과하면 success=true와 별점(1~3)
   open(id, onDone) {
     this.game = MINIGAMES[id];
-    if (!this.game) { if (onDone) onDone(true); return; }
+    if (!this.game) { if (onDone) onDone(true, 3); return; }
     this.onDone = onDone;
     this.round = 0;
     this.finished = false;
+    this.stars = 0;
+    this.hp = this.game.rounds;      // 수호자 체력 = 문제 수
+    this.hearts = CONFIG.MINIGAME.HEARTS;
+    this.mistakes = 0;
+    this.combo = 0;
     this.el.title.textContent = `⚔ 수호자의 시험 · ${this.game.title}`;
+    this.el.fx.replaceChildren();
+    this.renderHud();
     this.isOpen = true;
     this.modal.hidden = false;
     this.startRound();
   }
+
+  renderHud(broken = -1, lostHeart = -1) {
+    this.el.hp.replaceChildren(...Array.from({ length: this.game.rounds }, (_, i) => {
+      const c = document.createElement("i");
+      if (i >= this.hp) c.className = "gone" + (i === broken ? " hitnow" : "");
+      return c;
+    }));
+    this.el.hearts.replaceChildren(...Array.from({ length: CONFIG.MINIGAME.HEARTS }, (_, i) => {
+      const h = document.createElement("span");
+      h.textContent = "❤";
+      if (i >= this.hearts) h.className = "lost" + (i === lostHeart ? " breaknow" : "");
+      return h;
+    }));
+    this.el.combo.textContent = this.combo >= 2 ? `🔥 ${this.combo}연속!` : "";
+  }
+
+  // 잠깐 떠오르는 글자 (데미지, 연속 정답 등)
+  float(text, color, x = 50, y = 30) {
+    const d = document.createElement("div");
+    d.className = "mg-float";
+    d.textContent = text;
+    d.style.color = color;
+    d.style.left = `${x}%`; d.style.top = `${y}%`;
+    this.el.fx.appendChild(d);
+    setTimeout(() => d.remove(), 1200);
+  }
+
+  retrigger(el, cls) { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
 
   startRound() {
     this.el.msg.textContent = "";
@@ -4509,8 +4958,10 @@ class MinigameUI {
     this.el.check.textContent = "확인";
     this.el.check.disabled = false;
     this.el.round.textContent = `${this.round + 1} / ${this.game.rounds}`;
+    this.el.stage._onKey = null; // 앞 문제(달 미니게임)의 키보드 조작 해제
     this.inst = this.game.makeRound(this.round, this.el.stage);
     this.el.prompt.textContent = this.inst.prompt;
+    if (this.inst.checkLabel) this.el.check.textContent = this.inst.checkLabel; // 예: 회로의 '스위치 ON'
   }
 
   onCheck() {
@@ -4519,11 +4970,50 @@ class MinigameUI {
     const r = this.inst.check();
     this.el.msg.textContent = r.msg;
     this.el.msg.className = "mg-msg " + (r.ok ? "ok" : "no");
-    if (!r.ok) return;
+
+    // 아직 다 고르지 않았을 때(예: 달을 놓지 않음)는 하트를 깎지 않음
+    if (!r.ok && r.incomplete) return;
+
+    if (!r.ok) {
+      // 틀림: 하트 하나, 수호자의 반격
+      this.mistakes++;
+      this.combo = 0;
+      this.hearts--;
+      this.renderHud(-1, this.hearts);
+      this.retrigger(this.panel, "shake");
+      this.float("💔", "#ff8a80", 88, 8);
+      if (this.hearts > 0) { sfx("wrong"); return; }
+      // 하트를 모두 잃음: 탈락 없이 힌트를 읽고 이 문제를 처음부터 다시
+      sfx("break");
+      this.el.msg.textContent = `${r.msg}\n💔 하트를 모두 잃었어요! 힌트를 잘 읽고 이 문제를 처음부터 다시 해 보자.`;
+      this.el.check.disabled = true;
+      setTimeout(() => {
+        if (!this.isOpen) return;
+        this.hearts = CONFIG.MINIGAME.HEARTS;
+        this.renderHud();
+        this.startRound();
+        this.el.msg.textContent = "하트가 다시 채워졌어요. 다시 도전!";
+      }, 2600);
+      return;
+    }
+
+    // 맞힘: 수호자에게 한 방
+    this.combo++;
+    this.hp--;
     this.round++;
+    this.renderHud(this.hp);
+    this.retrigger(this.el.face, "hit");
+    this.float("-1", "#ff5252", 20, 4);
+    if (this.combo >= 2) { this.float(`🔥 ${this.combo}연속!`, "#ffb74d", 50, 10); this.retrigger(this.el.combo, "pop"); }
+    sfx(this.combo >= 2 ? "combo" : "hit");
+
     if (this.round >= this.game.rounds) {
       this.finished = true;
-      this.el.msg.textContent = r.msg + "  ✨ 모든 시험을 통과했다!";
+      this.stars = mgStarsFor(this.mistakes);
+      this.showStars(this.stars);
+      setTimeout(() => sfx("win"), 250);
+      this.el.msg.textContent = `${r.msg}  ✨ 수호자를 물리쳤다! ${starText(this.stars)}`
+        + (this.stars < 3 ? " (실수 없이 통과하면 ★★★)" : "");
       this.el.check.textContent = "계속 ▶";
       return;
     }
@@ -4531,11 +5021,26 @@ class MinigameUI {
     setTimeout(() => { if (this.isOpen) this.startRound(); }, 1500);
   }
 
+  showStars(n) {
+    const box = document.createElement("div");
+    box.className = "mg-stars";
+    for (let i = 0; i < 3; i++) {
+      const s = document.createElement("span");
+      s.textContent = "★";
+      if (i >= n) s.className = "off";
+      s.style.animationDelay = `${0.15 + i * 0.2}s`;
+      box.appendChild(s);
+    }
+    this.el.fx.appendChild(box);
+    setTimeout(() => box.remove(), 2600);
+  }
+
   close(success) {
     if (!this.isOpen) return;
     this.isOpen = false;
     this.modal.hidden = true;
-    if (this.onDone) this.onDone(success);
+    this.el.fx.replaceChildren();
+    if (this.onDone) this.onDone(success, success ? this.stars : 0);
   }
 }
 
@@ -4825,6 +5330,10 @@ class WorldMapUI {
     const mg = q && MINIGAMES[q.minigame];
     return mg ? mg.title.split(" — ")[0] : "수호자의 시험";
   }
+  gateStars(ch) {
+    const q = Object.values(GAME_DATA.quests).find((x) => x.chapterId === ch.id && x.minigame);
+    return (q && gameState.mgStars[q.minigame]) || 0;
+  }
   bossBeaten() { return !!this.game.storySeen["boss:defeated"]; }
 
   open() {
@@ -5077,7 +5586,7 @@ class WorldMapUI {
   infoHTML(id) {
     const g = this.game, ch = this.chapter(id), sp = ch && gameState.spirits[ch.spirit];
     const home = id === CONFIG.WORLDMAP.HOME;
-    const li = (done, text) => `<li class="${done ? "done" : ""}">${done ? "✔" : "○"} ${wmEsc(text)}</li>`;
+    const li = (done, text, extraHtml = "") => `<li class="${done ? "done" : ""}">${done ? "✔" : "○"} ${wmEsc(text)}${extraHtml}</li>`;
     let h = "";
     if (!ch) return "";
     if (!home && !g.reached(id)) {
@@ -5098,7 +5607,8 @@ class WorldMapUI {
       h += `<ul class="wm-checks">`
         + li(sp.unlocked, `⛓ 봉인 풀기 — 사람들의 실험 ${g.sealDone(ch)} / ${g.sealTotal(ch)}`)
         + li(sp.level >= CONFIG.HUNT.GATE_LEVEL, `⚙ 사냥터에서 진화 — 톱니 ${gearsOf(sp)} / ${gearsMax()} (Lv.${sp.level})`)
-        + li(this.gatePassed(ch), `🌀 차원문 시험 — ${this.gateName(ch)}`)
+        + li(this.gatePassed(ch), `🌀 차원문 시험 — ${this.gateName(ch)}`,
+             this.gatePassed(ch) ? ` <span class="wm-stars">${starText(this.gateStars(ch))}</span>` : "")
         + `</ul>`;
     }
     if (id === g.map.id) h += `<div class="wm-here">📍 지금 여기에 있어요</div>`;
@@ -5274,6 +5784,7 @@ class SaveManager {
       avatar: gameState.avatar,
       playerName: gameState.playerName,
       bossDraft: gameState.bossDraft,
+      mgStars: gameState.mgStars,
     };
   }
 
@@ -5320,6 +5831,8 @@ class SaveManager {
     gameState.avatar = AVATARS.some((a) => a.sprite === data.avatar) ? data.avatar : null;
     gameState.playerName = cleanPlayerName(data.playerName);
     gameState.bossDraft = typeof data.bossDraft === "string" ? data.bossDraft.slice(0, 4000) : "";
+    gameState.mgStars = {};
+    for (const [id, n] of Object.entries(data.mgStars || {})) if (MINIGAMES[id]) gameState.mgStars[id] = clampInt(n, 0, 3, 0);
 
     // 바뀐 타일: 존재하는 맵 + "x,y" 형식 + 정의된 타일만
     e.mapChanges = {};
@@ -6183,18 +6696,40 @@ class GameEngine {
   runGateTrial(npc, quest) {
     const fill = (lines) => lines.map((l) => ({ ...l, speaker: l.speaker ?? npc.name, text: this.fillStoryText(l.text) }));
     this.input.reset();
+    const id = quest.minigame;
+    // 별점 기록: 더 높을 때만 바꾸고 알림
+    const record = (stars) => {
+      const best = gameState.mgStars[id] || 0;
+      if (stars > best) {
+        gameState.mgStars[id] = stars;
+        this.notice(`${starText(stars)} 수호자의 시험 ${best ? "최고 기록 경신!" : "기록!"}`, { duration: 2400 });
+      }
+      this.save.scheduleSave();
+    };
     if (this.unlocked.has(npc.id)) {
-      this.dialogueUI.openStory([{ speaker: npc.name, text: "너는 이미 내 시험을 통과했다. 차원문은 열려 있으니 앞으로 나아가거라." }]);
+      // 이미 통과: 별 3개가 아니면 다시 도전해 별을 모을 수 있음 (차원문은 열린 그대로)
+      const best = gameState.mgStars[id] || 0;
+      if (best >= 3) {
+        this.dialogueUI.openStory([{ speaker: npc.name, text: `훌륭하다. 너는 내 시험을 완벽하게(${starText(3)}) 통과했다. 차원문은 열려 있으니 앞으로 나아가거라.` }]);
+        return;
+      }
+      this.dialogueUI.openStory([
+        { speaker: npc.name, text: `너는 이미 내 시험을 통과했다${best ? ` (${starText(best)})` : ""}. 차원문은 열려 있다.` },
+        { speaker: npc.name, text: "별을 더 모으고 싶다면 다시 도전해 보아라. 실수 없이 통과하면 별 세 개다! ([다음]을 누르면 시작, ×를 누르면 그만두기)" },
+      ], () => {
+        this.minigameUI.open(id, (success, stars) => { this.input.reset(); if (success) record(stars); });
+      }, { cancelable: true });
       return;
     }
     const intro = fill(quest.intro);
-    this.dialogueUI.openStory(intro.concat([{ speaker: "", text: "[다음]을 누르면 수호자의 시험이 시작됩니다. (3문제)" }]), () => {
-      this.minigameUI.open(quest.minigame, (success) => {
+    this.dialogueUI.openStory(intro.concat([{ speaker: "", text: "[다음]을 누르면 수호자의 시험이 시작됩니다. (3문제 · 하트 3개)" }]), () => {
+      this.minigameUI.open(id, (success, stars) => {
         this.input.reset();
         if (!success) {
           this.notice("시험을 멈췄어요. 수호자에게 다시 말을 걸면 처음부터 도전할 수 있어요", { duration: 2600 });
           return;
         }
+        record(stars);
         this.unlocked.add(npc.id);
         document.dispatchEvent(new CustomEvent("stage-unlock", {
           detail: { npcId: npc.id, questId: quest.id, chapterId: quest.chapterId, conceptMastery: 100 },
